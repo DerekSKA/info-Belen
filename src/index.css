@@ -1,21 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap");
-
 :root {
-  /* Fondos */
-  --bg-vanilla: #F5EBE1;
-  --bg-cream: #F0EBD5;
-  --bg-soft-blush: #E3D5CA;
-  --bg-alabaster: #EDEEE9;
-
-  /* Acentos */
-  --accent-dusty: #A0817E;
-  --accent-blush-clay: #D7BDB0;
-  --accent-warm-sand: #C2A283;
-  --accent-caramel: #9F6941;
-
-  /* Textos y bordes */
-  --text-espresso: #6B3D26;
-  --border-taupe: #D6CCC2;
+  /* Paleta Belisse Glam */
+  --bg-lavender: #F8F5FC;
+  --surface-white: #FFFFFF;
+  --bg-lilac: #EAE2F5;
+  --accent-lavender: #C7AFE9;
+  --accent-purple: #7550B5;
+  --text-primary: #211B29;
+  --border-soft: #DDD2EE; /* auxiliar para bordes suaves */
 
   /* Tipografías */
   --font-serif: "Cormorant Garamond", Georgia, serif;
@@ -26,13 +17,13 @@
   --page-gutter: clamp(22px, 7vw, 105px);
   --content-width: 1200px;
 
-  /* Sombras cálidas y discretas */
-  --shadow-soft: 0 12px 35px rgba(107, 61, 38, 0.07);
-  --shadow-hover: 0 18px 42px rgba(107, 61, 38, 0.12);
+  /* Sombras suaves */
+  --shadow-soft: 0 12px 35px rgba(33, 27, 41, 0.07);
+  --shadow-hover: 0 18px 42px rgba(33, 27, 41, 0.12);
 
   font-family: var(--font-sans);
-  color: var(--text-espresso);
-  background: var(--bg-vanilla);
+  color: var(--text-primary);
+  background: var(--bg-lavender);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -56,8 +47,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: var(--bg-vanilla);
-  color: var(--text-espresso);
+  background: var(--bg-lavender);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 300;
@@ -102,13 +93,13 @@ a {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent-caramel);
+  outline: 2px solid var(--accent-purple);
   outline-offset: 4px;
 }
 
 ::selection {
-  color: var(--text-espresso);
-  background: var(--accent-blush-clay);
+  color: var(--text-primary);
+  background: var(--accent-lavender);
 }
 
 h1,

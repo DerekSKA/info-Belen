@@ -1,12 +1,14 @@
 import { useState } from "react";
 import belenImage from "./assets/belen.png";
+import ondarusa from "./assets/Ondas-rusas.png"
+import facial from "./assets/Limpieza-facial.png"
 import "./index.css";
 import "./App.css";
 
 /* ---------- DATOS EDITABLES ---------- */
 const WHATSAPP_NUMBER = "56974526058"; // +56 9 7452 6058
 const WHATSAPP_MESSAGE =
-  "¡Hola, Belén! 😊 Conocí Belisse Glam a través de tu página web y me gustaría consultar por tus servicios.";
+  "¡Hola, Belén! Conocí Belisse Glam a través de tu página web y me gustaría consultar por tus servicios.";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const INSTAGRAM_URL = "https://www.instagram.com/belisse.glam/";
 const CATALOG_URL = "https://canva.link/8njdqur15jd2cz0";
@@ -27,15 +29,15 @@ const services = [
     title: "Limpieza facial",
     description: "Un ritual de cuidado para consentir tu piel y regalarte una pausa.",
     price: "",
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1000&q=85",
+    image: facial,
     alt: "Tratamiento facial y cuidado de la piel",
   },
   {
     number: "03",
-    title: "Maquillaje",
+    title: "Ondas rusas",
     description: "Detalles delicados que acompañan tu estilo y resaltan tu esencia.",
     price: "",
-    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1000&q=85",
+    image: ondarusa,
     alt: "Cosméticos y maquillaje en tonos suaves",
   },
 ];

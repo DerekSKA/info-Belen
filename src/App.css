@@ -415,24 +415,27 @@ main {
 
 .service-number {
   position: absolute;
-  top: 25px;
-  left: 25px;
+  top: 3px;
+  left: 50%;
   display: grid;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   place-items: center;
-  border: 1px solid var(--surface-white);
+  border: 1px solid var(--accent-lavender);
   border-radius: 50%;
+  background: rgba(33, 27, 41, 0.55);
   color: var(--surface-white);
-  font-family: var(--font-serif);
-  font-size: 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-variant-numeric: lining-nums;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transform: translateX(-50%);
 }
 
+/* El destello quedaba recortado por el arco superior de la tarjeta */
 .service-card-sparkle {
-  position: absolute;
-  top: 31px;
-  right: 26px;
-  color: var(--surface-white);
+  display: none;
 }
 
 .service-card-content {
@@ -731,10 +734,13 @@ main {
   align-items: center;
   gap: 9px;
   margin: 20px 0 0;
-  color: var(--accent-purple);
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-style: italic;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-style: normal;
+  font-variant-numeric: lining-nums;
+  font-weight: 500;
+  letter-spacing: 0.8px;
 }
 
 .contact-note svg {

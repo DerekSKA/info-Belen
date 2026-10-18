@@ -1,16 +1,31 @@
-# React + Vite
+# Belisse Glam
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Sitio de Belén (React + Vite, CSS puro). Para verlo: `npm install` y luego `npm run dev`.
 
-Currently, two official plugins are available:
+## Estructura
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+index.html            título, favicon (public/logo.jpg) y fuentes
+public/logo.jpg       favicon
+src/
+  main.jsx            punto de entrada
+  index.css           variables de la paleta, reset y estilos base
+  App.css             estilos de cada sección
+  App.jsx             contenido: datos editables arriba, componentes abajo
+  assets/
+    brand/            logo, foto del Hero y foto de la carta
+    services/         portadas de los servicios (+ placeholder.svg)
+    backgrounds/      fondo de la sección de servicios
+    gallery/<slug>/   fotos de la galería de cada servicio
+    projects/         fotos de la sección Proyectos
+```
 
-## React Compiler
+## Qué editar y dónde (arriba de `src/App.jsx`)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- **WhatsApp, Instagram y catálogo de Canva:** constantes `WHATSAPP_NUMBER`, `WHATSAPP_MESSAGE`, `INSTAGRAM_URL`, `CATALOG_URL`.
+- **Servicios:** arreglo `services` (nombre, descripción, precio, portada). Si `price` está vacío se muestra "Valor en catálogo". El `slug` enlaza con la carpeta de fotos y no se cambia.
+- **Portada vs galería:** `image` es la portada y solo se ve en la tarjeta. Al hacer clic en la foto se abre `/#/galeria/<slug>` en otra pestaña con las fotos de `src/assets/gallery/<slug>/`, sin repetir la portada.
+- **Fotos de la galería:** copia jpg, png o webp a `src/assets/gallery/<slug>/`. Si la carpeta solo tiene los `ejemplo-N.svg`, se muestran esos; con fotos reales, las reemplazan. Si no hay nada, aparece "Pronto subiremos las fotos".
+- **Proyectos:** copia fotos reales a `src/assets/projects/`.
+- **Testimonios:** arreglo `testimonials`. Vacío = la sección no se muestra.
+- **Fondo de servicios:** cambia `src/assets/backgrounds/fondo-servicios.jpg` (o el import).

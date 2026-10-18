@@ -1,15 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import belenImage from "./assets/belen.png";
-import heroLogo from "./assets/hero.jpg"; // logo (emblema y navbar)
-import heroPhoto from "./assets/hero.jpeg"; // foto vertical de Belén para el Hero
-import ondarusa from "./assets/Ondas-rusas.png";
-import facial from "./assets/Limpieza-facial.png";
-import serviciocat from "./assets/servicio.jpeg";
 
+// Marca
+import heroLogo from "./assets/brand/logo.jpg"; // emblema del Hero y navbar
+import heroPhoto from "./assets/brand/hero-photo.jpeg"; // foto vertical del Hero
+import belenImage from "./assets/brand/belen.png"; // foto de la carta "Quién soy"
 
-// Fondo de la sección de servicios: reemplaza este archivo (o cambia el import) por la imagen que elija Belén.
-import servicesBg from "./assets/services-bg-placeholder.svg";
-import servicePlaceholder from "./assets/service-placeholder.svg";
+// Portadas de servicios (solo se ven en la tarjeta; no se repiten en la galería)
+import servicePlaceholder from "./assets/services/placeholder.svg";
+import coverLimpiezaFacial from "./assets/services/limpieza-facial.jpg";
+import coverOndasRusas from "./assets/services/ondas-rusas.jpg";
+import coverServicio04 from "./assets/services/servicio-04.jpg";
+import coverServicio07 from "./assets/services/servicio-07.jpg";
+import coverServicio08 from "./assets/services/servicio-08.jpg";
+
+// Fondo de la sección de servicios
+import servicesBg from "./assets/backgrounds/fondo-servicios.jpg";
+
 import "./index.css";
 import "./App.css";
 
@@ -29,7 +35,7 @@ const services = [
     title: "Lifting de pestañas",
     description: "Realza tu mirada y descubre la belleza de los pequeños detalles.",
     price: "",
-    image: servicePlaceholder, // reemplazar por la foto real
+    image: servicePlaceholder, // reemplazar por la portada real
     alt: "Lifting de pestañas",
   },
   {
@@ -37,7 +43,7 @@ const services = [
     title: "Limpieza facial",
     description: "Un ritual de cuidado para consentir tu piel y regalarte una pausa.",
     price: "",
-    image: facial,
+    image: coverLimpiezaFacial,
     alt: "Tratamiento facial y cuidado de la piel",
   },
   {
@@ -45,14 +51,51 @@ const services = [
     title: "Ondas rusas",
     description: "Detalles delicados que acompañan tu estilo y resaltan tu esencia.",
     price: "",
-    image: ondarusa,
+    image: coverOndasRusas,
     alt: "Servicio de ondas rusas",
   },
-  // SERVICIOS DE EJEMPLO: reemplaza nombre, descripción, precio e imagen por los reales.
-  // "slug" es el nombre de la carpeta de fotos: src/assets/gallery/<slug>/
-  { slug: "servicio-04", title: "Nuevo servicio 04", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: serviciocat, alt: "Nuevo servicio" },
-  { slug: "servicio-05", title: "Nuevo servicio 05", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
-  { slug: "servicio-06", title: "Nuevo servicio 06", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
+  // SERVICIOS 4 A 8: reemplaza nombre, descripción y precio por los reales.
+  // "slug" es el nombre de la carpeta de fotos (src/assets/gallery/<slug>/): no lo cambies.
+  {
+    slug: "servicio-04",
+    title: "Nuevo servicio 04",
+    description: "Texto de ejemplo: describe aquí el servicio.",
+    price: "",
+    image: coverServicio04,
+    alt: "Portada del servicio 04",
+  },
+  {
+    slug: "servicio-05",
+    title: "Nuevo servicio 05",
+    description: "Texto de ejemplo: describe aquí el servicio.",
+    price: "",
+    image: servicePlaceholder,
+    alt: "Nuevo servicio",
+  },
+  {
+    slug: "servicio-06",
+    title: "Nuevo servicio 06",
+    description: "Texto de ejemplo: describe aquí el servicio.",
+    price: "",
+    image: servicePlaceholder,
+    alt: "Nuevo servicio",
+  },
+  {
+    slug: "servicio-07",
+    title: "Nuevo servicio 07",
+    description: "Texto de ejemplo: describe aquí el servicio.",
+    price: "",
+    image: coverServicio07,
+    alt: "Portada del servicio 07",
+  },
+  {
+    slug: "servicio-08",
+    title: "Nuevo servicio 08",
+    description: "Texto de ejemplo: describe aquí el servicio.",
+    price: "",
+    image: coverServicio08,
+    alt: "Portada del servicio 08",
+  },
 ];
 
 // Galerías: copia las fotos de cada servicio a src/assets/gallery/<slug>/ (jpg, png, webp) y aparecen solas.
@@ -70,12 +113,11 @@ Object.entries(galleryFiles)
     (galleryBySlug[slug] ||= []).push({ src, file });
   });
 
+// La portada (service.image) solo se muestra en la tarjeta; la galería no la repite.
 const getGallery = (service) => {
   const files = galleryBySlug[service.slug] || [];
   const real = files.filter((f) => !f.file.endsWith(".svg"));
-  const list = (real.length ? real : files).map((f) => f.src);
-  const main = service.image === servicePlaceholder ? [] : [service.image];
-  return [...new Set([...main, ...list])];
+  return (real.length ? real : files).map((f) => f.src);
 };
 
 // Proyectos: basta con copiar fotos reales a src/assets/projects/ (jpg, png, webp).

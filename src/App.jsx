@@ -15,6 +15,13 @@ const WHATSAPP_MESSAGE =
   "¡Hola, Belén! Conocí Belisse Glam a través de tu página web y me gustaría consultar por tus servicios.";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 const INSTAGRAM_URL = "https://www.instagram.com/belisse.glam/";
+// ---------- BROMA DEL BOTÓN "VER SERVICIOS" ----------
+const PRANK_ENABLED = true; // false = el botón vuelve a llevar a #servicios
+const PRANK_GIF = "https://c.tenor.com/aNKgtdT5ymEAAAAd/tenor.gif"; // mejor: descargarlo a src/assets e importarlo
+const PRANK_AUDIO = ""; // cuando tengas la música: importa el archivo (mp3) y ponlo aquí
+const PRANK_YOUTUBE_ID = "B2hGVQX8ntg"; // música de relleno mientras no haya audio propio
+const PRANK_YOUTUBE_START = 45; // segundo desde el que empieza
+
 const CATALOG_URL = "https://canva.link/8njdqur15jd2cz0";
 
 // Catálogo: agrega aquí el precio real de cada servicio (ej: price: "$25.000").
@@ -113,11 +120,12 @@ function Eyebrow({ children, light = false }) {
   );
 }
 
-function Button({ children, href, variant = "dusty", className = "", external = false }) {
+function Button({ children, href, variant = "dusty", className = "", external = false, onClick }) {
   return (
     <a
       className={`button button-${variant} ${className}`}
       href={href}
+      onClick={onClick}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       <span>{children}</span>
@@ -132,6 +140,24 @@ function App() {
   const trackRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
+  const [prankOpen, setPrankOpen] = useState(false);
+
+  const openPrank = (event) => {
+    event.preventDefault();
+    setPrankOpen(true);
+  };
+
+  useEffect(() => {
+    if (!prankOpen) return undefined;
+    const onKeyDown = (event) => event.key === "Escape" && setPrankOpen(false);
+    document.addEventListener("keydown", onKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [prankOpen]);
+
   const letterRef = useRef(null);
   const [letterOpen, setLetterOpen] = useState(false);
 
@@ -218,7 +244,7 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <Button href="#servicios" variant="dusty">
+              <Button href="#servicios" variant="dusty" onClick={PRANK_ENABLED ? openPrank : undefined}>
                 Ver servicios y precios
               </Button>
               <Button href={WHATSAPP_URL} variant="outline" external>
@@ -476,6 +502,27 @@ function App() {
           </div>
         </section>
       </main>
+
+      {/* BROMA: GIF a pantalla completa con música */}
+      {prankOpen && (
+        <div className="prank-overlay" role="dialog" aria-modal="true" aria-label="Sorpresa" onClick={() => setPrankOpen(false)}>
+          <button className="prank-close" type="button" aria-label="Cerrar" onClick={() => setPrankOpen(false)}>
+            ✕
+          </button>
+          <img className="prank-gif" src={PRANK_GIF} alt="GIF sorpresa" onClick={(event) => event.stopPropagation()} />
+          {PRANK_AUDIO ? (
+            <audio src={PRANK_AUDIO} autoPlay loop />
+          ) : (
+            <iframe
+              className="prank-player"
+              src={`https://www.youtube.com/embed/${PRANK_YOUTUBE_ID}?autoplay=1&start=${PRANK_YOUTUBE_START}&loop=1&playlist=${PRANK_YOUTUBE_ID}`}
+              title="Música de fondo"
+              allow="autoplay; encrypted-media"
+              onClick={(event) => event.stopPropagation()}
+            />
+          )}
+        </div>
+      )}
 
       {/* FOOTER */}
       <footer className="footer">

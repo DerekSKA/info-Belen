@@ -242,24 +242,48 @@ function App() {
             <div className="mail-letter-wrap" id="carta-belen" ref={letterRef} aria-hidden={!letterOpen}>
               <div className="mail-letter-clip">
                 <article className="mail-letter">
-                  <div className="mail-head">
-                    <img className="mail-photo" src={belenImage} alt="Retrato de Belén" loading="lazy" />
-                    <h3 className="mail-title">
-                      Hola, soy <span className="script-word">Belén.</span>
-                    </h3>
-                    <p className="mail-lead">Creo que cuidarte también es una forma de quererte.</p>
+                  <div className="mail-scroll" tabIndex={letterOpen ? 0 : -1} aria-label="Carta de Belén">
+                    <div className="mail-head">
+                      <img className="mail-photo" src={belenImage} alt="Retrato de Belén" loading="lazy" />
+                      <h3 className="mail-title">
+                        Hola, soy <span className="script-word">Belén.</span>
+                      </h3>
+                    </div>
+                    <p className="mail-lead">
+                      Bienvenidas a Belisse.glam, un lugar donde la creatividad, la técnica y la pasión se unen para dar
+                      vida a distintas formas de expresión a través de la belleza.
+                    </p>
+                    <p>
+                      Soy cosmetóloga y maquilladora, y he creado este espacio con el propósito de compartir mi trabajo
+                      ofreciendo experiencias que combinan el cuidado de la piel con el arte del maquillaje.
+                    </p>
+                    <p>
+                      Aquí encontrarás tratamientos faciales enfocados en el bienestar y las necesidades de cada piel,
+                      cuidados que buscan devolverle luminosidad, hidratación y vitalidad, además de servicios de
+                      pestañas que realzan la mirada y complementan la belleza de cada persona.
+                    </p>
+                    <p>
+                      Pero la belleza también es arte, transformación y libertad creativa. Por eso, este espacio abarca
+                      desde maquillajes sociales, elegantes y delicados, ideales para acompañarte en momentos
+                      especiales, hasta propuestas artísticas, caracterizaciones y maquillajes de fantasía que exploran
+                      el lado más creativo, intenso e incluso aterrador de este oficio.
+                    </p>
+                    <p>
+                      Cada servicio representa una oportunidad para crear, experimentar y cuidar cada detalle,
+                      entendiendo que detrás de cada piel, cada mirada y cada maquillaje existe una historia diferente.
+                    </p>
+                    <p>
+                      Mi objetivo es seguir creciendo, perfeccionando mis técnicas y entregando un trabajo realizado con
+                      dedicación, responsabilidad y amor por lo que hago.
+                    </p>
+                    <p>
+                      Gracias por ser parte de este espacio, por acompañarme en este camino y por permitirme compartir
+                      con ustedes cada proceso, cada creación y cada nuevo desafío.
+                    </p>
+                    <a className="text-link" href="#contacto" tabIndex={letterOpen ? 0 : -1}>
+                      Conversemos <Arrow />
+                    </a>
                   </div>
-                  <p>
-                    Soy Belén, y este espacio nace de mi interés por la estética, el cuidado personal y los pequeños
-                    detalles que nos hacen sentir bien.
-                  </p>
-                  <p>
-                    Quiero que cada experiencia sea cercana y personalizada, un lugar donde puedas sentirte cómoda,
-                    escuchada y acompañada mientras te regalas un momento para ti.
-                  </p>
-                  <a className="text-link" href="#contacto" tabIndex={letterOpen ? 0 : -1}>
-                    Conversemos <Arrow />
-                  </a>
                 </article>
               </div>
             </div>

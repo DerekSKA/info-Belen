@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import belenImage from "./assets/belen.png";
-import heroLogo from "./assets/hero.jpg";
+import heroLogo from "./assets/hero.jpg"; // logo (emblema y navbar)
+import heroPhoto from "./assets/hero.jpeg"; // foto vertical de Belén para el Hero
 import ondarusa from "./assets/Ondas-rusas.png";
 import facial from "./assets/Limpieza-facial.png";
+
+
 // Fondo de la sección de servicios: reemplaza este archivo (o cambia el import) por la imagen que elija Belén.
 import servicesBg from "./assets/services-bg-placeholder.svg";
 import servicePlaceholder from "./assets/service-placeholder.svg";
@@ -202,7 +205,8 @@ function App() {
       <main>
         {/* HERO */}
         <section className="hero" id="inicio">
-          <div className="hero-card">
+          <div className={`hero-card ${heroPhoto ? "hero-card-photo" : ""}`}>
+            <div className="hero-copy">
             <img className="hero-emblem" src={heroLogo} alt="Logo de Belisse Glam" />
             <p className="hero-badge">BEAUTY · SKINCARE · SELF LOVE</p>
 
@@ -225,6 +229,15 @@ function App() {
                 Contactar por WhatsApp
               </Button>
             </div>
+            </div>
+
+            {heroPhoto && (
+              <figure className="hero-photo">
+                <Sparkle className="hero-sparkle hero-sparkle-top" size={26} />
+                <Sparkle className="hero-sparkle hero-sparkle-bottom" size={20} />
+                <img src={heroPhoto} alt="Belén, cosmetóloga y maquilladora" />
+              </figure>
+            )}
           </div>
         </section>
 

@@ -4,6 +4,7 @@ import heroLogo from "./assets/hero.jpg"; // logo (emblema y navbar)
 import heroPhoto from "./assets/hero.jpeg"; // foto vertical de Belén para el Hero
 import ondarusa from "./assets/Ondas-rusas.png";
 import facial from "./assets/Limpieza-facial.png";
+import serviciocat from "./assets/servicio.jpeg";
 
 
 // Fondo de la sección de servicios: reemplaza este archivo (o cambia el import) por la imagen que elija Belén.
@@ -24,6 +25,7 @@ const CATALOG_URL = "https://canva.link/8njdqur15jd2cz0";
 // Si price está vacío, se muestra "Valor en catálogo".
 const services = [
   {
+    slug: "lifting-de-pestanas",
     title: "Lifting de pestañas",
     description: "Realza tu mirada y descubre la belleza de los pequeños detalles.",
     price: "",
@@ -31,6 +33,7 @@ const services = [
     alt: "Lifting de pestañas",
   },
   {
+    slug: "limpieza-facial",
     title: "Limpieza facial",
     description: "Un ritual de cuidado para consentir tu piel y regalarte una pausa.",
     price: "",
@@ -38,6 +41,7 @@ const services = [
     alt: "Tratamiento facial y cuidado de la piel",
   },
   {
+    slug: "ondas-rusas",
     title: "Ondas rusas",
     description: "Detalles delicados que acompañan tu estilo y resaltan tu esencia.",
     price: "",
@@ -45,10 +49,34 @@ const services = [
     alt: "Servicio de ondas rusas",
   },
   // SERVICIOS DE EJEMPLO: reemplaza nombre, descripción, precio e imagen por los reales.
-  { title: "Nuevo servicio 04", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
-  { title: "Nuevo servicio 05", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
-  { title: "Nuevo servicio 06", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
+  // "slug" es el nombre de la carpeta de fotos: src/assets/gallery/<slug>/
+  { slug: "servicio-04", title: "Nuevo servicio 04", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: serviciocat, alt: "Nuevo servicio" },
+  { slug: "servicio-05", title: "Nuevo servicio 05", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
+  { slug: "servicio-06", title: "Nuevo servicio 06", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
 ];
+
+// Galerías: copia las fotos de cada servicio a src/assets/gallery/<slug>/ (jpg, png, webp) y aparecen solas.
+// Mientras la carpeta solo tenga los "ejemplo-N.svg", se muestran esos; al agregar fotos reales, los reemplazan.
+const galleryFiles = import.meta.glob("./assets/gallery/*/*.{jpg,jpeg,png,webp,svg}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const galleryBySlug = {};
+Object.entries(galleryFiles)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .forEach(([path, src]) => {
+    const [, , , slug, file] = path.split("/");
+    (galleryBySlug[slug] ||= []).push({ src, file });
+  });
+
+const getGallery = (service) => {
+  const files = galleryBySlug[service.slug] || [];
+  const real = files.filter((f) => !f.file.endsWith(".svg"));
+  const list = (real.length ? real : files).map((f) => f.src);
+  const main = service.image === servicePlaceholder ? [] : [service.image];
+  return [...new Set([...main, ...list])];
+};
 
 // Proyectos: basta con copiar fotos reales a src/assets/projects/ (jpg, png, webp).
 const projectFiles = import.meta.glob("./assets/projects/*.{jpg,jpeg,png,webp}", {
@@ -129,7 +157,77 @@ function Button({ children, href, variant = "dusty", className = "", external = 
   );
 }
 
+function GalleryPage({ slug }) {
+  const service = services.find((s) => s.slug === slug);
+  const photos = service ? getGallery(service) : [];
+
+  return (
+    <>
+      <header className="site-nav gallery-nav">
+        <a className="site-brand" href={window.location.pathname}>
+          <img className="site-logo" src={heroLogo} alt="" />
+          Belisse Glam
+        </a>
+        <a className="site-cta" href={window.location.pathname}>
+          Volver al inicio
+        </a>
+      </header>
+
+      <main className="gallery-main section-space">
+        <div className="section-heading">
+          <Eyebrow>GALERÍA</Eyebrow>
+          <h1 className="section-title">{service ? service.title : "Galería no encontrada"}</h1>
+          {service && <p className="section-intro">{service.description}</p>}
+        </div>
+
+        <nav className="gallery-chips" aria-label="Otras galerías">
+          {services.map((s) => (
+            <a key={s.slug} className={s.slug === slug ? "is-current" : ""} href={`#/galeria/${s.slug}`}>
+              {s.title}
+            </a>
+          ))}
+        </nav>
+
+        {photos.length > 0 ? (
+          <div className="projects-gallery gallery-grid">
+            {photos.map((src, index) => (
+              <figure className="project-item" key={src}>
+                <img src={src} alt={`${service.title}, foto ${index + 1}`} loading="lazy" />
+              </figure>
+            ))}
+          </div>
+        ) : (
+          <div className="projects-empty">
+            <Sparkle size={22} />
+            <p>Pronto subiremos las fotos de este servicio. Mientras tanto, puedes ver más en Instagram.</p>
+            <Button href={INSTAGRAM_URL} variant="outline" external>
+              Ver Instagram
+            </Button>
+          </div>
+        )}
+
+        <div className="gallery-actions">
+          <Button href={WHATSAPP_URL} variant="dusty" external>
+            Consultar por WhatsApp
+          </Button>
+          <Button href={window.location.pathname} variant="outline">
+            Volver al inicio
+          </Button>
+        </div>
+      </main>
+
+      <footer className="footer">
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} Belisse Glam</span>
+          <span>Hecho con cariño <span aria-hidden="true">♡</span></span>
+        </div>
+      </footer>
+    </>
+  );
+}
+
 function App() {
+  const [route, setRoute] = useState(window.location.hash);
   const [menuOpen, setMenuOpen] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const trackRef = useRef(null);
@@ -154,6 +252,15 @@ function App() {
   };
 
   useEffect(() => {
+    const onHashChange = () => {
+      setRoute(window.location.hash);
+      if (window.location.hash.startsWith("#/galeria/")) window.scrollTo(0, 0);
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  useEffect(() => {
     updateArrows();
     window.addEventListener("resize", updateArrows);
     return () => window.removeEventListener("resize", updateArrows);
@@ -168,6 +275,10 @@ function App() {
   const changeTestimonial = (direction) =>
     setTestimonialIndex((current) => (current + direction + testimonials.length) % testimonials.length);
   const closeMenu = () => setMenuOpen(false);
+
+  if (route.startsWith("#/galeria/")) {
+    return <GalleryPage slug={route.replace("#/galeria/", "")} />;
+  }
 
   return (
     <>
@@ -362,9 +473,16 @@ function App() {
             <div className="services-track" ref={trackRef} onScroll={updateArrows}>
               {services.map((service) => (
                 <article className="service-card" key={service.title}>
-                  <div className="service-media">
+                  <a
+                    className="service-media"
+                    href={`#/galeria/${service.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Ver todas las fotos de ${service.title}`}
+                  >
                     <img src={service.image} alt={service.alt} loading="lazy" />
-                  </div>
+                    <span className="service-media-hint">Ver fotos</span>
+                  </a>
                   <h3>{service.title}</h3>
                   <p className="service-desc">{service.description}</p>
                   <span className="service-price">{service.price || "Valor en catálogo"}</span>

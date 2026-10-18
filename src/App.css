@@ -1848,3 +1848,110 @@ html {
     width: min(64%, 250px);
   }
 }
+
+/* ========================================
+   FOTO DE SERVICIO -> GALERÍA
+======================================== */
+
+.service-media {
+  position: relative;
+  display: block;
+  cursor: zoom-in;
+}
+
+.service-media img {
+  transition: transform 0.5s ease;
+}
+
+.service-media:hover img {
+  transform: scale(1.05);
+}
+
+.service-media-hint {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  left: 0;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--accent-gold);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 700px) {
+  .service-media-hint {
+    display: none;
+  }
+}
+
+/* ========================================
+   PÁGINA DE GALERÍA (otra pestaña)
+======================================== */
+
+.gallery-nav {
+  grid-template-columns: 1fr auto;
+}
+
+.gallery-nav .site-cta {
+  display: inline-flex;
+}
+
+.gallery-main {
+  min-height: 70vh;
+  background: var(--bg-blush);
+}
+
+.gallery-chips {
+  display: flex;
+  max-width: var(--content-width);
+  margin: 0 auto 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.gallery-chips a {
+  padding: 8px 16px;
+  border: 1px solid var(--gold-soft);
+  border-radius: 100px;
+  background: var(--surface-white);
+  color: var(--text-primary);
+  font-size: 12px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.gallery-chips a:hover,
+.gallery-chips a.is-current {
+  background: var(--accent-gold);
+  color: var(--surface-white);
+}
+
+.gallery-grid {
+  columns: 3 240px;
+}
+
+.gallery-actions {
+  display: flex;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* Galería: cuadrícula uniforme (se ve bien con pocas o muchas fotos) */
+.gallery-grid {
+  display: grid;
+  columns: auto;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  align-items: start;
+}
+
+.gallery-grid .project-item {
+  margin: 0;
+}

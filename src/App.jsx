@@ -61,6 +61,15 @@ const projects = Object.entries(projectFiles)
 // Formato: { quote: "…", name: "Nombre", service: "Servicio" }
 const testimonials = [];
 
+// Destellos que salen del sobre al abrir la carta (posición final y retraso).
+const letterSparks = [
+  { x: "-110px", y: "-130px", d: "0.55s", size: 14 },
+  { x: "-50px", y: "-175px", d: "0.7s", size: 10 },
+  { x: "10px", y: "-150px", d: "0.6s", size: 16 },
+  { x: "70px", y: "-185px", d: "0.8s", size: 11 },
+  { x: "125px", y: "-120px", d: "0.65s", size: 13 },
+];
+
 const navLinks = [
   { href: "#inicio", label: "Inicio" },
   { href: "#sobre-mi", label: "Quién soy" },
@@ -123,6 +132,16 @@ function App() {
   const trackRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
+  const letterRef = useRef(null);
+  const [letterOpen, setLetterOpen] = useState(false);
+
+  const toggleLetter = () => {
+    const opening = !letterOpen;
+    setLetterOpen(opening);
+    if (opening) {
+      setTimeout(() => letterRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 900);
+    }
+  };
 
   const updateArrows = () => {
     const el = trackRef.current;
@@ -209,51 +228,69 @@ function App() {
           </div>
         </section>
 
-        {/* QUIÉN SOY */}
-        <section className="about section-space" id="sobre-mi">
-          <div className="about-layout">
-            <div className="about-visual">
-              <div className="about-image-frame">
-                <img src={belenImage} alt="Retrato de Belén" loading="lazy" />
-              </div>
-              <Sparkle className="about-sparkle about-sparkle-top" size={27} />
-              <Sparkle className="about-sparkle about-sparkle-bottom" size={19} />
-              <div className="about-stamp">
-                <span className="about-stamp-script">con cariño</span>
-                <Sparkle size={17} />
-                <span>EN CADA DETALLE</span>
+        {/* QUIÉN SOY (carta en un sobre) */}
+        <section className="mail-section section-space" id="sobre-mi">
+          <div className="section-heading">
+            <Eyebrow>QUIÉN SOY</Eyebrow>
+            <h2 className="section-title">
+              Una carta <span className="script-word">para ti.</span>
+            </h2>
+            <p className="section-intro">Ábrela para conocerme un poquito.</p>
+          </div>
+
+          <div className={`mail ${letterOpen ? "is-open" : ""}`}>
+            <div className="mail-letter-wrap" id="carta-belen" ref={letterRef} aria-hidden={!letterOpen}>
+              <div className="mail-letter-clip">
+                <article className="mail-letter">
+                  <div className="mail-head">
+                    <img className="mail-photo" src={belenImage} alt="Retrato de Belén" loading="lazy" />
+                    <h3 className="mail-title">
+                      Hola, soy <span className="script-word">Belén.</span>
+                    </h3>
+                    <p className="mail-lead">Creo que cuidarte también es una forma de quererte.</p>
+                  </div>
+                  <p>
+                    Soy Belén, y este espacio nace de mi interés por la estética, el cuidado personal y los pequeños
+                    detalles que nos hacen sentir bien.
+                  </p>
+                  <p>
+                    Quiero que cada experiencia sea cercana y personalizada, un lugar donde puedas sentirte cómoda,
+                    escuchada y acompañada mientras te regalas un momento para ti.
+                  </p>
+                  <a className="text-link" href="#contacto" tabIndex={letterOpen ? 0 : -1}>
+                    Conversemos <Arrow />
+                  </a>
+                </article>
               </div>
             </div>
 
-            <div className="about-copy">
-              <Eyebrow>UN POQUITO SOBRE MÍ</Eyebrow>
-              <h2 className="section-title">
-                Hola, soy <span className="script-word">Belén.</span>
-              </h2>
-              <p className="about-lead">Creo que cuidarte también es una forma de quererte.</p>
-              <p className="body-copy">
-                Soy Belén, y este espacio nace de mi interés por la estética, el cuidado personal y los pequeños
-                detalles que nos hacen sentir bien.
-              </p>
-              <p className="body-copy">
-                Quiero que cada experiencia sea cercana y personalizada, un lugar donde puedas sentirte cómoda,
-                escuchada y acompañada mientras te regalas un momento para ti.
-              </p>
-              <div className="about-mini">
-                <img
-                  src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=500&q=85"
-                  alt="Productos de cuidado facial en tonos naturales"
-                  loading="lazy"
-                />
-                <div>
-                  <span className="about-mini-script">Tu momento.</span>
-                  <p>Tu pausa, tu cuidado, tu esencia.</p>
-                </div>
+            <div className="envelope" aria-hidden="true" onClick={toggleLetter}>
+              <span className="envelope-back" />
+              <span className="envelope-flap" />
+              <span className="envelope-front" />
+              <span className="envelope-label">Para ti</span>
+              <span className="envelope-seal">
+                <Sparkle size={18} />
+              </span>
+              <div className="mail-burst">
+                {letterSparks.map((spark) => (
+                  <span key={spark.x} style={{ "--x": spark.x, "--y": spark.y, "--d": spark.d }}>
+                    <Sparkle size={spark.size} />
+                  </span>
+                ))}
               </div>
-              <a className="text-link" href="#contacto">
-                Conversemos <Arrow />
-              </a>
             </div>
+
+            <button
+              className="button button-dusty mail-button"
+              type="button"
+              aria-expanded={letterOpen}
+              aria-controls="carta-belen"
+              onClick={toggleLetter}
+            >
+              <span>{letterOpen ? "Cerrar carta" : "Abrir carta"}</span>
+              <Sparkle size={16} />
+            </button>
           </div>
         </section>
 

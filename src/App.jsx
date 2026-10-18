@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import belenImage from "./assets/belen.png";
-import ondarusa from "./assets/Ondas-rusas.png"
-import facial from "./assets/Limpieza-facial.png"
+import heroLogo from "./assets/hero.jpg";
+import ondarusa from "./assets/Ondas-rusas.png";
+import facial from "./assets/Limpieza-facial.png";
+// Fondo de la sección de servicios: reemplaza este archivo (o cambia el import) por la imagen que elija Belén.
+import servicesBg from "./assets/services-bg-placeholder.svg";
+import servicePlaceholder from "./assets/service-placeholder.svg";
 import "./index.css";
 import "./App.css";
 
@@ -17,15 +21,13 @@ const CATALOG_URL = "https://canva.link/8njdqur15jd2cz0";
 // Si price está vacío, se muestra "Valor en catálogo".
 const services = [
   {
-    number: "01",
     title: "Lifting de pestañas",
     description: "Realza tu mirada y descubre la belleza de los pequeños detalles.",
     price: "",
-    image: "https://images.unsplash.com/photo-1583001931096-959e9a1a6223?auto=format&fit=crop&w=1000&q=85",
-    alt: "Inspiración de belleza y cuidado de pestañas",
+    image: servicePlaceholder, // reemplazar por la foto real
+    alt: "Lifting de pestañas",
   },
   {
-    number: "02",
     title: "Limpieza facial",
     description: "Un ritual de cuidado para consentir tu piel y regalarte una pausa.",
     price: "",
@@ -33,13 +35,16 @@ const services = [
     alt: "Tratamiento facial y cuidado de la piel",
   },
   {
-    number: "03",
     title: "Ondas rusas",
     description: "Detalles delicados que acompañan tu estilo y resaltan tu esencia.",
     price: "",
     image: ondarusa,
-    alt: "Cosméticos y maquillaje en tonos suaves",
+    alt: "Servicio de ondas rusas",
   },
+  // SERVICIOS DE EJEMPLO: reemplaza nombre, descripción, precio e imagen por los reales.
+  { title: "Nuevo servicio 04", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
+  { title: "Nuevo servicio 05", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
+  { title: "Nuevo servicio 06", description: "Texto de ejemplo: describe aquí el servicio.", price: "", image: servicePlaceholder, alt: "Nuevo servicio" },
 ];
 
 // Proyectos: basta con copiar fotos reales a src/assets/projects/ (jpg, png, webp).
@@ -115,6 +120,27 @@ function Button({ children, href, variant = "dusty", className = "", external = 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const trackRef = useRef(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const updateArrows = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 8);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 8);
+  };
+
+  useEffect(() => {
+    updateArrows();
+    window.addEventListener("resize", updateArrows);
+    return () => window.removeEventListener("resize", updateArrows);
+  }, []);
+
+  const scrollServices = (direction) => {
+    const el = trackRef.current;
+    if (el) el.scrollBy({ left: direction * el.clientWidth * 0.9, behavior: "smooth" });
+  };
   const currentTestimonial = testimonials[testimonialIndex];
 
   const changeTestimonial = (direction) =>
@@ -123,45 +149,42 @@ function App() {
 
   return (
     <>
+      {/* NAVBAR */}
+      <header className="site-nav">
+        <a className="site-brand" href="#inicio" onClick={closeMenu}>
+          <img className="site-logo" src={heroLogo} alt="" />
+          Belisse Glam
+        </a>
+
+        <nav className={`site-links ${menuOpen ? "site-links-open" : ""}`} aria-label="Navegación principal">
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} onClick={closeMenu}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <a className="site-cta" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+          Escríbeme
+        </a>
+
+        <button
+          className={`menu-toggle ${menuOpen ? "menu-toggle-open" : ""}`}
+          type="button"
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+        </button>
+      </header>
+
       <main>
-        {/* NAVBAR + HERO */}
+        {/* HERO */}
         <section className="hero" id="inicio">
-          <div className="hero-glow" aria-hidden="true">
-            <span className="glow glow-outer" />
-            <span className="glow glow-mid" />
-            <span className="glow glow-core" />
-          </div>
-
-          <header className="site-nav">
-            <a className="site-brand" href="#inicio" onClick={closeMenu}>
-              Belisse Glam
-            </a>
-
-            <nav className={`site-links ${menuOpen ? "site-links-open" : ""}`} aria-label="Navegación principal">
-              {navLinks.map((link) => (
-                <a key={link.href} href={link.href} onClick={closeMenu}>
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-
-            <a className="site-cta" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              Escríbeme
-            </a>
-
-            <button
-              className={`menu-toggle ${menuOpen ? "menu-toggle-open" : ""}`}
-              type="button"
-              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              <span />
-              <span />
-            </button>
-          </header>
-
-          <div className="hero-content">
+          <div className="hero-card">
+            <img className="hero-emblem" src={heroLogo} alt="Logo de Belisse Glam" />
             <p className="hero-badge">BEAUTY · SKINCARE · SELF LOVE</p>
 
             <h1>
@@ -176,10 +199,10 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <Button href="#servicios" variant="glass">
+              <Button href="#servicios" variant="dusty">
                 Ver servicios y precios
               </Button>
-              <Button href={WHATSAPP_URL} variant="ghost" external>
+              <Button href={WHATSAPP_URL} variant="outline" external>
                 Contactar por WhatsApp
               </Button>
             </div>
@@ -235,15 +258,18 @@ function App() {
         </section>
 
         {/* SERVICIOS Y PRECIOS */}
-        <section className="services section-space" id="servicios">
+        <section
+          className="services section-space"
+          id="servicios"
+          style={{ backgroundImage: `url(${servicesBg})` }}
+        >
           <div className="section-heading">
             <Eyebrow>SERVICIOS Y PRECIOS</Eyebrow>
             <h2 className="section-title">
               Un espacio para <span className="script-word">ti.</span>
             </h2>
             <p className="section-intro">
-              Servicios pensados para acompañarte, cuidarte y resaltar tu belleza natural. Consulta los valores en el
-              catálogo o escríbeme por WhatsApp.
+              Desliza para conocer todos los servicios. Consulta los valores en el catálogo o escríbeme por WhatsApp.
             </p>
             <div className="service-stamp">
               <span>BEAUTY</span>
@@ -252,24 +278,34 @@ function App() {
             </div>
           </div>
 
-          <div className="service-grid">
-            {services.map((service) => (
-              <article className="service-card" key={service.number}>
-                <img src={service.image} alt={service.alt} loading="lazy" />
-                <div className="service-overlay" />
-                <span className="service-number">{service.number}</span>
-                <Sparkle className="service-card-sparkle" size={21} />
+          <div className="services-carousel">
+            {canPrev && (
+              <button className="services-arrow services-arrow-prev" type="button" aria-label="Ver servicios anteriores" onClick={() => scrollServices(-1)}>
+                <Arrow direction="left" />
+              </button>
+            )}
 
-                <div className="service-card-content">
-                  <span className="service-price">{service.price || "Valor en catálogo"}</span>
+            <div className="services-track" ref={trackRef} onScroll={updateArrows}>
+              {services.map((service) => (
+                <article className="service-card" key={service.title}>
+                  <div className="service-media">
+                    <img src={service.image} alt={service.alt} loading="lazy" />
+                  </div>
                   <h3>{service.title}</h3>
-                  <p>{service.description}</p>
+                  <p className="service-desc">{service.description}</p>
+                  <span className="service-price">{service.price || "Valor en catálogo"}</span>
                   <a className="service-link" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    CONSULTAR POR WHATSAPP <Arrow />
+                    CONSULTAR <Arrow />
                   </a>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
+
+            {canNext && (
+              <button className="services-arrow services-arrow-next" type="button" aria-label="Ver más servicios" onClick={() => scrollServices(1)}>
+                <Arrow />
+              </button>
+            )}
           </div>
 
           <div className="services-bottom">

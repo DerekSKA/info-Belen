@@ -1,12 +1,15 @@
 :root {
-  /* Paleta Belisse Glam */
-  --bg-lavender: #F8F5FC;
+  /* Paleta Belisse Glam: rosa pastel, dorado y celeste */
+  --bg-blush: #FFF6F5;
   --surface-white: #FFFFFF;
-  --bg-lilac: #EAE2F5;
-  --accent-lavender: #C7AFE9;
-  --accent-purple: #7550B5;
-  --text-primary: #211B29;
-  --border-soft: #DDD2EE; /* auxiliar para bordes suaves */
+  --bg-pink: #FEEAEB;
+  --accent-pink: #F4C3C6;
+  --accent-gold: #8F6A2E; /* dorado profundo para botones y textos */
+  --gold-soft: #D9BC8C; /* dorado suave decorativo */
+  --celeste: #D5E9F3; /* navbar y footer */
+  --celeste-deep: #B6D7E8;
+  --text-primary: #3A2E2E;
+  --border-soft: #EBD9D4;
 
   /* Tipografías */
   --font-serif: "Cormorant Garamond", Georgia, serif;
@@ -18,12 +21,12 @@
   --content-width: 1200px;
 
   /* Sombras suaves */
-  --shadow-soft: 0 12px 35px rgba(33, 27, 41, 0.07);
-  --shadow-hover: 0 18px 42px rgba(33, 27, 41, 0.12);
+  --shadow-soft: 0 12px 35px rgba(58, 46, 46, 0.07);
+  --shadow-hover: 0 18px 42px rgba(58, 46, 46, 0.12);
 
   font-family: var(--font-sans);
   color: var(--text-primary);
-  background: var(--bg-lavender);
+  background: var(--bg-blush);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -47,7 +50,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: var(--bg-lavender);
+  background: var(--bg-blush);
   color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 13px;
@@ -93,13 +96,13 @@ a {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent-purple);
+  outline: 2px solid var(--accent-gold);
   outline-offset: 4px;
 }
 
 ::selection {
   color: var(--text-primary);
-  background: var(--accent-lavender);
+  background: var(--accent-pink);
 }
 
 h1,

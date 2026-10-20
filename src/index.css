@@ -53,7 +53,7 @@ body {
   background: var(--bg-blush);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 300;
   line-height: 1.8;
 }

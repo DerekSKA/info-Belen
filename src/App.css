@@ -35,7 +35,7 @@ main {
   gap: 9px;
   margin: 0 0 20px;
   color: var(--accent-gold);
-  font-size: 9px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 2px;
   line-height: 1.8;
@@ -57,7 +57,7 @@ main {
 .body-copy {
   margin: 0 0 15px;
   color: var(--text-primary);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 300;
   line-height: 2.15;
 }
@@ -71,7 +71,7 @@ main {
   padding: 13px 24px;
   border: 1px solid transparent;
   border-radius: 100px;
-  font-size: 9px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.5px;
   line-height: 1.5;
@@ -156,7 +156,7 @@ main {
   padding-bottom: 4px;
   border-bottom: 1px solid var(--accent-gold);
   color: var(--text-primary);
-  font-size: 9px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.4px;
 }
@@ -188,7 +188,7 @@ main {
   max-width: 490px;
   margin: 17px auto 0;
   color: var(--text-primary);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 300;
   line-height: 2.05;
 }
@@ -381,7 +381,7 @@ main {
 .testimonial-name {
   margin: 0;
   color: var(--surface-white);
-  font-size: 9px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 1.7px;
 }
@@ -389,7 +389,7 @@ main {
 .testimonial-service {
   margin: 4px 0 0;
   color: var(--surface-white);
-  font-size: 9px;
+  font-size: 11.5px;
   font-weight: 300;
   opacity: 0.9;
 }
@@ -585,7 +585,7 @@ main {
 
 .footer-links a {
   color: var(--bg-pink);
-  font-size: 9px;
+  font-size: 11.5px;
   transition: color 0.2s ease;
 }
 
@@ -661,7 +661,7 @@ main {
 
   .section-intro {
     max-width: 350px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .service-stamp {
@@ -964,7 +964,7 @@ html {
   padding: 9px 15px;
   border-radius: 100px;
   color: var(--text-primary);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.3px;
   white-space: nowrap;
   transition: background 0.2s ease;
@@ -980,7 +980,7 @@ html {
   border-radius: 100px;
   background: var(--accent-gold);
   color: var(--surface-white);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   transition: background 0.2s ease;
 }
@@ -1036,7 +1036,7 @@ html {
   border-radius: 100px;
   background: rgba(255, 255, 255, 0.7);
   color: var(--accent-gold);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 2px;
 }
@@ -1074,7 +1074,7 @@ html {
 .hero-actions .button {
   min-height: 54px;
   padding: 14px 30px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 /* ========================================
@@ -1170,7 +1170,7 @@ html {
   flex: 1;
   margin: 0;
   padding: 0 12px;
-  font-size: 13px;
+  font-size: 14.5px;
   line-height: 1.7;
 }
 
@@ -1180,7 +1180,7 @@ html {
   border-radius: 100px;
   background: var(--bg-pink);
   color: var(--accent-gold);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
 }
 
@@ -1194,7 +1194,7 @@ html {
   border-radius: 100px;
   background: var(--accent-gold);
   color: var(--surface-white);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
   transition: background 0.2s ease;
@@ -1329,7 +1329,7 @@ html {
     padding: 14px 0;
     border-bottom: 1px solid var(--border-soft);
     border-radius: 0;
-    font-size: 13px;
+    font-size: 14.5px;
   }
 
   .site-links a:last-child {
@@ -1394,7 +1394,7 @@ html {
 
   .service-desc {
     padding: 0 6px;
-    font-size: 13px;
+    font-size: 14.5px;
   }
 
   .services-arrow {
@@ -1715,12 +1715,12 @@ html {
 
   .mail-letter p:not(.mail-lead) {
     margin-bottom: 9px;
-    font-size: 12.5px;
+    font-size: 14px;
     line-height: 1.65;
   }
 
   .mail-letter .text-link {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .mail-button {
@@ -1867,7 +1867,7 @@ html {
   border-radius: 100px;
   background: rgba(255, 255, 255, 0.92);
   color: var(--accent-gold);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.5px;
 }
@@ -1910,7 +1910,7 @@ html {
   border-radius: 100px;
   background: var(--surface-white);
   color: var(--text-primary);
-  font-size: 12px;
+  font-size: 14px;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -1952,7 +1952,7 @@ html {
 .service-line {
   margin: -6px 0 0;
   color: var(--accent-gold);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1961,7 +1961,7 @@ html {
 .service-steps {
   margin: 0;
   color: var(--text-primary);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -1983,7 +1983,7 @@ html {
   display: block;
   margin-bottom: 6px;
   color: var(--accent-gold);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1998,7 +1998,7 @@ html {
 .service-results li {
   position: relative;
   padding-left: 18px;
-  font-size: 12.5px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
@@ -2011,7 +2011,7 @@ html {
   position: absolute;
   left: 0;
   color: var(--gold-soft);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .service-prices {
@@ -2032,7 +2032,7 @@ html {
 }
 
 .service-prices dt {
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 500;
 }
 
@@ -2051,7 +2051,7 @@ html {
 
 .service-prices .service-duration dd {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -2105,7 +2105,7 @@ html {
   background: #25D366;
   box-shadow: 0 8px 24px rgba(31, 143, 78, 0.45);
   color: #fff;
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 600;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -2151,4 +2151,139 @@ html {
 /* Sin descripción en la tarjeta: el espacio sobrante queda arriba de los resultados */
 .service-results {
   margin-top: auto;
+}
+
+/* ========================================
+   TARJETAS MÁS COMPACTAS EN CELULAR
+   (se ve un pedazo de la siguiente para invitar a deslizar)
+======================================== */
+
+@media (max-width: 700px) {
+  .services-track {
+    gap: 10px;
+    padding: 6px 2px 14px;
+    touch-action: pan-x pan-y;
+  }
+
+  .service-card {
+    flex-basis: 64%;
+    gap: 7px;
+    padding: 6px 6px 12px;
+    border-radius: 18px;
+  }
+
+  .service-card::before {
+    inset: 3px;
+    border-radius: 15px;
+  }
+
+  .service-media {
+    aspect-ratio: 1 / 1;
+    border-radius: 13px;
+  }
+
+  .service-card h3 {
+    font-size: 19px;
+  }
+
+  .service-line {
+    margin-top: -3px;
+    font-size: 11.5px;
+    letter-spacing: 1.5px;
+  }
+
+  .service-steps {
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+  }
+
+  .service-results {
+    margin: 0 4px;
+    padding: 8px 10px;
+    border-radius: 12px;
+  }
+
+  .service-block-title {
+    margin-bottom: 4px;
+    font-size: 11.5px;
+  }
+
+  .service-results li {
+    padding-left: 14px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .service-results li + li {
+    margin-top: 2px;
+  }
+
+  .service-prices {
+    gap: 4px;
+    margin: 0 4px;
+  }
+
+  .service-prices div {
+    padding: 4px 11px;
+  }
+
+  .service-prices dt {
+    font-size: 12px;
+  }
+
+  .service-prices dd {
+    font-size: 16px;
+  }
+
+  .service-prices .service-duration dd {
+    font-size: 13px;
+  }
+
+  .service-link {
+    margin: 0 4px;
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .services-arrow {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* Celulares muy angostos */
+@media (max-width: 380px) {
+  .service-card {
+    flex-basis: 70%;
+  }
+}
+
+/* Computador: un poco más angostas también */
+@media (min-width: 1001px) {
+  .service-card {
+    flex-basis: calc((100% - 48px) / 4);
+  }
+}
+
+
+/* Ajustes finales de legibilidad en celular */
+@media (max-width: 700px) {
+  .service-card {
+    flex-basis: 68%;
+  }
+
+  .service-steps,
+  .service-line {
+    letter-spacing: 0.5px;
+  }
+
+  .service-results li {
+    line-height: 1.45;
+  }
+}
+
+@media (max-width: 380px) {
+  .service-card {
+    flex-basis: 74%;
+  }
 }

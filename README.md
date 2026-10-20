@@ -23,9 +23,10 @@ src/
 ## Qué editar y dónde (arriba de `src/App.jsx`)
 
 - **WhatsApp, Instagram y catálogo de Canva:** constantes `WHATSAPP_NUMBER`, `WHATSAPP_MESSAGE`, `INSTAGRAM_URL`, `CATALOG_URL`.
-- **Servicios:** arreglo `services` (nombre, descripción, precio, portada). Si `price` está vacío se muestra "Valor en catálogo". El `slug` enlaza con la carpeta de fotos y no se cambia.
+- **Servicios:** arreglo `services` (nombre, línea, 3 pasos, descripción, resultados, `prices`, duración, portada). El `slug` enlaza con la carpeta de fotos y no se cambia.
+- **Portafolio ("Trabajos que hablan"):** usa las mismas tarjetas de `services`; la foto abre la galería en otra pestaña.
+- **Botón flotante de WhatsApp:** componente `FloatingWhatsApp`, usa `WHATSAPP_NUMBER`.
 - **Portada vs galería:** `image` es la portada y solo se ve en la tarjeta. Al hacer clic en la foto se abre `/#/galeria/<slug>` en otra pestaña con las fotos de `src/assets/gallery/<slug>/`, sin repetir la portada.
 - **Fotos de la galería:** copia jpg, png o webp a `src/assets/gallery/<slug>/`. Si la carpeta solo tiene los `ejemplo-N.svg`, se muestran esos; con fotos reales, las reemplazan. Si no hay nada, aparece "Pronto subiremos las fotos".
-- **Proyectos:** copia fotos reales a `src/assets/projects/`.
 - **Testimonios:** arreglo `testimonials`. Vacío = la sección no se muestra.
 - **Fondo de servicios:** cambia `src/assets/backgrounds/fondo-servicios.jpg` (o el import).

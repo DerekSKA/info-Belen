@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FEEAEB"/><stop offset="1" stop-color="#E9D3C0"/></linearGradient></defs>
+  <rect width="800" height="1000" fill="url(#g)"/>
+  <g fill="none" stroke="#8F6A2E" stroke-opacity="0.75" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-4.5 400 540)"><path d="M210 470q47-52 94 0t94 0t94 0t94 0"/><path d="M210 540q47-52 94 0t94 0t94 0t94 0"/><path d="M210 610q47-52 94 0t94 0t94 0t94 0"/></g>
+  <text x="400" y="820" text-anchor="middle" font-family="sans-serif" font-size="30" fill="#8F6A2E" fill-opacity="0.75">Foto de ejemplo 1</text>
+</svg>

@@ -9,9 +9,6 @@ import belenImage from "./assets/brand/belen.png"; // foto de la carta "Quién s
 import servicePlaceholder from "./assets/services/placeholder.svg";
 import coverLimpiezaFacial from "./assets/services/limpieza-facial.jpg";
 import coverOndasRusas from "./assets/services/ondas-rusas.jpg";
-import coverServicio04 from "./assets/services/servicio-04.jpg";
-import coverServicio07 from "./assets/services/servicio-07.jpg";
-import coverServicio08 from "./assets/services/servicio-08.jpg";
 
 // Fondo de la sección de servicios
 import servicesBg from "./assets/backgrounds/fondo-servicios.jpg";
@@ -24,77 +21,96 @@ const WHATSAPP_NUMBER = "56974526058"; // +56 9 7452 6058
 const WHATSAPP_MESSAGE =
   "¡Hola, Belén! Conocí Belisse Glam a través de tu página web y me gustaría consultar por tus servicios.";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+// Enlace de WhatsApp con el nombre del servicio ya escrito en el mensaje.
+const whatsappForService = (title) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    `¡Hola, Belén! Vi tu página web y me gustaría agendar una hora para el servicio "${title}". ¿Qué disponibilidad tienes?`,
+  )}`;
+const CURRENT_YEAR = new Date().getFullYear();
 const INSTAGRAM_URL = "https://www.instagram.com/belisse.glam/";
 const CATALOG_URL = "https://canva.link/8njdqur15jd2cz0";
 
-// Catálogo: agrega aquí el precio real de cada servicio (ej: price: "$25.000").
-// Si price está vacío, se muestra "Valor en catálogo".
+// Servicios y precios (según las láminas de cada servicio).
+// "slug" enlaza con la carpeta de fotos src/assets/gallery/<slug>/: no lo cambies.
+// prices: lista de { label, value }. results: los 3 resultados de cada lámina.
 const services = [
+  {
+    slug: "piel-de-seda",
+    title: "Piel de Seda",
+    line: "Línea Hydra Boost",
+    steps: ["Hidratación", "Nutrir", "Proteger"],
+    description:
+      "Hidratación profunda que transforma tu piel: suavidad que se siente, brillo que se ve y esa tersura de seda desde la primera sesión. Un cuidado completo que rellena, nutre y deja tu piel radiante, fresca y renovada.",
+    results: ["Suavidad de seda", "Brillo natural", "Piel hidratada y tersa"],
+    prices: [
+      { label: "Valor", value: "$29.990" },
+      { label: "Pack de 3", value: "$80.000" },
+    ],
+    duration: "",
+    image: servicePlaceholder, // reemplazar por la portada real
+    alt: "Piel de Seda, tratamiento de hidratación profunda",
+  },
+  {
+    slug: "basic-glow",
+    title: "Basic Glow",
+    line: "Frescura al instante",
+    steps: ["Limpieza", "Exfoliación", "Frescura"],
+    description:
+      "Un cuidado esencial que devuelve frescura, suavidad y brillo natural. Sin productos agresivos, perfecto para mantener tu piel sana, luminosa y lista para brillar.",
+    results: ["Piel limpia y fresca", "Luminosidad inmediata", "Tono uniforme"],
+    prices: [{ label: "Valor", value: "$25.000" }],
+    duration: "30-40 min",
+    image: coverLimpiezaFacial,
+    alt: "Basic Glow, limpieza facial",
+  },
+  {
+    slug: "ondas-rusas-solo-equipo",
+    title: "Ondas Rusas: solo equipo",
+    line: "Solo equipo",
+    steps: ["Tonificar", "Reafirmar", "Activar"],
+    description:
+      "Reafirma, tonifica y activa tu silueta. Las ondas rusas trabajan para darte firmeza, mejorar la circulación y reducir la flacidez y celulitis, sin productos extra. Resultados visibles desde la primera sesión.",
+    results: ["Firmeza visible", "Activa circulación", "Tonifica y define"],
+    prices: [
+      { label: "1 sesión", value: "$25.000" },
+      { label: "4 sesiones", value: "$90.000" },
+      { label: "8 sesiones", value: "$130.000" },
+    ],
+    duration: "45 min",
+    image: servicePlaceholder, // reemplazar por la portada real
+    alt: "Ondas Rusas, solo equipo",
+  },
+  {
+    slug: "ondas-rusas-firmeza-silueta",
+    title: "Ondas Rusas: Firmeza & Silueta",
+    line: "Firmeza & Silueta",
+    steps: ["Activar", "Moldear", "Reafirmar"],
+    description:
+      "Tratamiento completo que combina ondas rusas + línea reductora reafirmante. Activa, moldea, reafirma y fija resultados para una silueta más definida y piel más firme. Resultados visibles desde la primera sesión.",
+    results: ["Silueta más definida", "Piel firme y suave", "Resultados duraderos"],
+    prices: [
+      { label: "1 sesión", value: "$32.000" },
+      { label: "4 sesiones", value: "$90.000" },
+      { label: "8 sesiones", value: "$160.000" },
+    ],
+    duration: "45-60 min",
+    image: coverOndasRusas,
+    alt: "Ondas Rusas, firmeza y silueta",
+  },
   {
     slug: "lifting-de-pestanas",
     title: "Lifting de pestañas",
+    line: "Técnica clásica",
+    steps: ["Curvatura", "Definición", "Nutrición"],
     description: "Realza tu mirada y descubre la belleza de los pequeños detalles.",
-    price: "",
+    results: ["Pestañas más largas y curvadas naturalmente", "Mirada más abierta y descansada"],
+    prices: [
+      { label: "Precio normal", value: "$20.000" },
+      { label: "Precio amigas", value: "$16.000" },
+    ],
+    duration: "",
     image: servicePlaceholder, // reemplazar por la portada real
     alt: "Lifting de pestañas",
-  },
-  {
-    slug: "limpieza-facial",
-    title: "Limpieza facial",
-    description: "Un ritual de cuidado para consentir tu piel y regalarte una pausa.",
-    price: "",
-    image: coverLimpiezaFacial,
-    alt: "Tratamiento facial y cuidado de la piel",
-  },
-  {
-    slug: "ondas-rusas",
-    title: "Ondas rusas",
-    description: "Detalles delicados que acompañan tu estilo y resaltan tu esencia.",
-    price: "",
-    image: coverOndasRusas,
-    alt: "Servicio de ondas rusas",
-  },
-  // SERVICIOS 4 A 8: reemplaza nombre, descripción y precio por los reales.
-  // "slug" es el nombre de la carpeta de fotos (src/assets/gallery/<slug>/): no lo cambies.
-  {
-    slug: "servicio-04",
-    title: "Nuevo servicio 04",
-    description: "Texto de ejemplo: describe aquí el servicio.",
-    price: "",
-    image: coverServicio04,
-    alt: "Portada del servicio 04",
-  },
-  {
-    slug: "servicio-05",
-    title: "Nuevo servicio 05",
-    description: "Texto de ejemplo: describe aquí el servicio.",
-    price: "",
-    image: servicePlaceholder,
-    alt: "Nuevo servicio",
-  },
-  {
-    slug: "servicio-06",
-    title: "Nuevo servicio 06",
-    description: "Texto de ejemplo: describe aquí el servicio.",
-    price: "",
-    image: servicePlaceholder,
-    alt: "Nuevo servicio",
-  },
-  {
-    slug: "servicio-07",
-    title: "Nuevo servicio 07",
-    description: "Texto de ejemplo: describe aquí el servicio.",
-    price: "",
-    image: coverServicio07,
-    alt: "Portada del servicio 07",
-  },
-  {
-    slug: "servicio-08",
-    title: "Nuevo servicio 08",
-    description: "Texto de ejemplo: describe aquí el servicio.",
-    price: "",
-    image: coverServicio08,
-    alt: "Portada del servicio 08",
   },
 ];
 
@@ -119,16 +135,6 @@ const getGallery = (service) => {
   const real = files.filter((f) => !f.file.endsWith(".svg"));
   return (real.length ? real : files).map((f) => f.src);
 };
-
-// Proyectos: basta con copiar fotos reales a src/assets/projects/ (jpg, png, webp).
-const projectFiles = import.meta.glob("./assets/projects/*.{jpg,jpeg,png,webp}", {
-  eager: true,
-  query: "?url",
-  import: "default",
-});
-const projects = Object.entries(projectFiles)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([path, src], index) => ({ src, alt: `Trabajo de Belisse Glam ${index + 1}`, key: path }));
 
 // Comentarios: solo reseñas reales y autorizadas. Si queda vacío, la sección no se muestra.
 // Formato: { quote: "…", name: "Nombre", service: "Servicio" }
@@ -177,6 +183,14 @@ function Arrow({ direction = "right" }) {
   );
 }
 
+function WhatsAppIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.04 2C6.5 2 2 6.5 2 12.04c0 1.77.46 3.5 1.34 5.02L2 22l5.06-1.33a10 10 0 0 0 4.98 1.32h.01c5.54 0 10.04-4.5 10.04-10.04 0-2.68-1.04-5.2-2.94-7.1A9.97 9.97 0 0 0 12.04 2zm0 18.3h-.01a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3 .79.8-2.93-.2-.31a8.3 8.3 0 0 1-1.27-4.47c0-4.58 3.73-8.3 8.32-8.3 2.22 0 4.3.87 5.87 2.43a8.25 8.25 0 0 1 2.43 5.88c0 4.58-3.73 8.3-8.41 8.3z" />
+    </svg>
+  );
+}
+
 function Eyebrow({ children, light = false }) {
   return (
     <p className={`eyebrow ${light ? "eyebrow-light" : ""}`}>
@@ -195,6 +209,76 @@ function Button({ children, href, variant = "dusty", className = "", external = 
     >
       <span>{children}</span>
       <Sparkle size={16} />
+    </a>
+  );
+}
+
+function ServiceCard({ service }) {
+  return (
+    <article className="service-card">
+      <a
+        className="service-media"
+        href={`#/galeria/${service.slug}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Ver todas las fotos de ${service.title}`}
+      >
+        <img src={service.image} alt={service.alt} loading="lazy" />
+        <span className="service-media-hint">Ver fotos</span>
+      </a>
+
+      <h3>{service.title}</h3>
+      <p className="service-line">{service.line}</p>
+      <p className="service-steps">{service.steps.join("  ·  ")}</p>
+      <div className="service-results">
+        <span className="service-block-title">Resultados</span>
+        <ul>
+          {service.results.map((result) => (
+            <li key={result}>{result}</li>
+          ))}
+        </ul>
+      </div>
+
+      <dl className="service-prices">
+        {service.prices.map((price) => (
+          <div key={price.label}>
+            <dt>{price.label}</dt>
+            <dd>{price.value}</dd>
+          </div>
+        ))}
+        {service.duration && (
+          <div className="service-duration">
+            <dt>Duración</dt>
+            <dd>{service.duration}</dd>
+          </div>
+        )}
+      </dl>
+
+      <a
+        className="service-link service-link-whatsapp"
+        href={whatsappForService(service.title)}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Consultar por ${service.title} en WhatsApp`}
+      >
+        <WhatsAppIcon size={17} />
+        <span>Consultar por WhatsApp</span>
+      </a>
+    </article>
+  );
+}
+
+function FloatingWhatsApp() {
+  return (
+    <a
+      className="whatsapp-float"
+      href={WHATSAPP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Escríbeme por WhatsApp"
+    >
+      <WhatsAppIcon size={30} />
+      <span className="whatsapp-float-label">Escríbeme</span>
     </a>
   );
 }
@@ -249,7 +333,7 @@ function GalleryPage({ slug }) {
         )}
 
         <div className="gallery-actions">
-          <Button href={WHATSAPP_URL} variant="dusty" external>
+          <Button href={service ? whatsappForService(service.title) : WHATSAPP_URL} variant="dusty" external>
             Consultar por WhatsApp
           </Button>
           <Button href={window.location.pathname} variant="outline">
@@ -260,10 +344,11 @@ function GalleryPage({ slug }) {
 
       <footer className="footer">
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Belisse Glam</span>
+          <span>© {CURRENT_YEAR} Belisse Glam</span>
           <span>Hecho con cariño <span aria-hidden="true">♡</span></span>
         </div>
       </footer>
+      <FloatingWhatsApp />
     </>
   );
 }
@@ -275,6 +360,9 @@ function App() {
   const trackRef = useRef(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
+  const portfolioRef = useRef(null);
+  const [portfolioCanPrev, setPortfolioCanPrev] = useState(false);
+  const [portfolioCanNext, setPortfolioCanNext] = useState(true);
   const letterRef = useRef(null);
   const [letterOpen, setLetterOpen] = useState(false);
 
@@ -302,11 +390,27 @@ function App() {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
+  const updatePortfolioArrows = () => {
+    const el = portfolioRef.current;
+    if (!el) return;
+    setPortfolioCanPrev(el.scrollLeft > 8);
+    setPortfolioCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 8);
+  };
+
   useEffect(() => {
-    updateArrows();
-    window.addEventListener("resize", updateArrows);
-    return () => window.removeEventListener("resize", updateArrows);
+    const onResize = () => {
+      updateArrows();
+      updatePortfolioArrows();
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  const scrollPortfolio = (direction) => {
+    const el = portfolioRef.current;
+    if (el) el.scrollBy({ left: direction * el.clientWidth * 0.9, behavior: "smooth" });
+  };
 
   const scrollServices = (direction) => {
     const el = trackRef.current;
@@ -496,7 +600,7 @@ function App() {
               Un espacio para <span className="script-word">ti.</span>
             </h2>
             <p className="section-intro">
-              Desliza para conocer todos los servicios. Consulta los valores en el catálogo o escríbeme por WhatsApp.
+              Desliza para conocer todos los servicios, con sus resultados y valores. Cuando elijas el tuyo, agenda directo por WhatsApp.
             </p>
             <div className="service-stamp">
               <span>BEAUTY</span>
@@ -514,24 +618,7 @@ function App() {
 
             <div className="services-track" ref={trackRef} onScroll={updateArrows}>
               {services.map((service) => (
-                <article className="service-card" key={service.title}>
-                  <a
-                    className="service-media"
-                    href={`#/galeria/${service.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Ver todas las fotos de ${service.title}`}
-                  >
-                    <img src={service.image} alt={service.alt} loading="lazy" />
-                    <span className="service-media-hint">Ver fotos</span>
-                  </a>
-                  <h3>{service.title}</h3>
-                  <p className="service-desc">{service.description}</p>
-                  <span className="service-price">{service.price || "Valor en catálogo"}</span>
-                  <a className="service-link" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    CONSULTAR <Arrow />
-                  </a>
-                </article>
+                <ServiceCard service={service} key={service.slug} />
               ))}
             </div>
 
@@ -543,40 +630,73 @@ function App() {
           </div>
 
           <div className="services-bottom">
-            <p>Revisa el catálogo completo con todos los servicios y valores.</p>
-            <Button href={CATALOG_URL} variant="dusty" external>
-              Ver catálogo de precios
+            <p>¿Tienes dudas o no sabes cuál elegir? Escríbeme y te ayudo.</p>
+            <Button href={WHATSAPP_URL} variant="dusty" external>
+              Agenda conmigo
+            </Button>
+            <Button href={CATALOG_URL} variant="outline" external>
+              Ver catálogo completo
             </Button>
           </div>
         </section>
 
-        {/* PROYECTOS */}
-        <section className="projects section-space" id="proyectos">
+        {/* PROYECTOS: mismas tarjetas que los servicios; la foto abre la galería en otra pestaña */}
+        <section className="projects portfolio section-space" id="proyectos">
           <div className="section-heading">
             <Eyebrow>PROYECTOS</Eyebrow>
             <h2 className="section-title">
               Trabajos que <span className="script-word">hablan.</span>
             </h2>
-            <p className="section-intro">Una selección de mis trabajos realizados.</p>
+            <p className="section-intro">Toca una tarjeta para ver las fotos de cada servicio.</p>
           </div>
 
-          {projects.length > 0 ? (
-            <div className="projects-gallery">
-              {projects.map((project) => (
-                <figure className="project-item" key={project.key}>
-                  <img src={project.src} alt={project.alt} loading="lazy" />
-                </figure>
+          <div className="services-carousel">
+            {portfolioCanPrev && (
+              <button className="services-arrow services-arrow-prev" type="button" aria-label="Ver trabajos anteriores" onClick={() => scrollPortfolio(-1)}>
+                <Arrow direction="left" />
+              </button>
+            )}
+
+            <div className="services-track" ref={portfolioRef} onScroll={updatePortfolioArrows}>
+              {services.map((service) => (
+                <article className="service-card portfolio-card" key={service.slug}>
+                  <a
+                    className="service-media"
+                    href={`#/galeria/${service.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Ver todas las fotos de ${service.title}`}
+                  >
+                    <img src={service.image} alt={service.alt} loading="lazy" />
+                    <span className="service-media-hint">Ver fotos</span>
+                  </a>
+                  <h3>{service.title}</h3>
+                  <p className="service-line">{service.line}</p>
+                  <a
+                    className="service-link service-link-outline"
+                    href={`#/galeria/${service.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    VER FOTOS <Arrow />
+                  </a>
+                </article>
               ))}
             </div>
-          ) : (
-            <div className="projects-empty">
-              <Sparkle size={22} />
-              <p>Estoy preparando esta galería. Mientras tanto, puedes ver mis trabajos más recientes en Instagram.</p>
-              <Button href={INSTAGRAM_URL} variant="outline" external>
-                Ver Instagram
-              </Button>
-            </div>
-          )}
+
+            {portfolioCanNext && (
+              <button className="services-arrow services-arrow-next" type="button" aria-label="Ver más trabajos" onClick={() => scrollPortfolio(1)}>
+                <Arrow />
+              </button>
+            )}
+          </div>
+
+          <div className="services-bottom">
+            <p>Mira más trabajos recientes en mi Instagram.</p>
+            <Button href={INSTAGRAM_URL} variant="outline" external>
+              Ver Instagram
+            </Button>
+          </div>
         </section>
 
         {/* COMENTARIOS (solo si hay reseñas reales) */}
@@ -667,10 +787,11 @@ function App() {
           </nav>
         </div>
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Belisse Glam</span>
+          <span>© {CURRENT_YEAR} Belisse Glam</span>
           <span>Hecho con cariño <span aria-hidden="true">♡</span></span>
         </div>
       </footer>
+      <FloatingWhatsApp />
     </>
   );
 }

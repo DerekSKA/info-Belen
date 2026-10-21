@@ -7,8 +7,6 @@ import belenImage from "./assets/brand/belen.png"; // foto de la carta "Quién s
 
 // Portadas de servicios (solo se ven en la tarjeta; no se repiten en la galería)
 import servicePlaceholder from "./assets/services/placeholder.svg";
-import coverLimpiezaFacial from "./assets/services/limpieza-facial.jpg";
-import coverOndasRusas from "./assets/services/ondas-rusas.jpg";
 
 // Fondo de la sección de servicios
 import servicesBg from "./assets/backgrounds/fondo-servicios.jpg";
@@ -32,6 +30,7 @@ const CATALOG_URL = "https://canva.link/8njdqur15jd2cz0";
 
 // Servicios y precios (según las láminas de cada servicio).
 // "slug" enlaza con la carpeta de fotos src/assets/gallery/<slug>/: no lo cambies.
+// "cover" es el nombre de la portada en src/assets/services/ (servicio-01 a servicio-05).
 // prices: lista de { label, value }. results: los 3 resultados de cada lámina.
 const services = [
   {
@@ -47,7 +46,7 @@ const services = [
       { label: "Pack de 3", value: "$80.000" },
     ],
     duration: "",
-    image: servicePlaceholder, // reemplazar por la portada real
+    cover: "servicio-01",
     alt: "Piel de Seda, tratamiento de hidratación profunda",
   },
   {
@@ -60,7 +59,7 @@ const services = [
     results: ["Piel limpia y fresca", "Luminosidad inmediata", "Tono uniforme"],
     prices: [{ label: "Valor", value: "$25.000" }],
     duration: "30-40 min",
-    image: coverLimpiezaFacial,
+    cover: "servicio-02",
     alt: "Basic Glow, limpieza facial",
   },
   {
@@ -77,7 +76,7 @@ const services = [
       { label: "8 sesiones", value: "$130.000" },
     ],
     duration: "45 min",
-    image: servicePlaceholder, // reemplazar por la portada real
+    cover: "servicio-03", // cuando agregues servicio-03.jpg (o .jpeg) a src/assets/services/, aparece sola
     alt: "Ondas Rusas, solo equipo",
   },
   {
@@ -94,7 +93,7 @@ const services = [
       { label: "8 sesiones", value: "$160.000" },
     ],
     duration: "45-60 min",
-    image: coverOndasRusas,
+    cover: "servicio-04",
     alt: "Ondas Rusas, firmeza y silueta",
   },
   {
@@ -109,10 +108,23 @@ const services = [
       { label: "Precio amigas", value: "$16.000" },
     ],
     duration: "",
-    image: servicePlaceholder, // reemplazar por la portada real
+    cover: "servicio-05",
     alt: "Lifting de pestañas",
   },
 ];
+
+// Portadas: cada servicio indica en "cover" el nombre del archivo (sin extensión) de src/assets/services/.
+// Acepta jpg, jpeg, png o webp. Si el archivo no existe todavía, se muestra el placeholder (no se rompe nada).
+const coverFiles = import.meta.glob("./assets/services/*.{jpg,jpeg,png,webp}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+const coverByName = {};
+Object.entries(coverFiles).forEach(([path, src]) => {
+  coverByName[path.split("/").pop().replace(/\.[^.]+$/, "")] = src;
+});
+const getCover = (service) => coverByName[service.cover] || servicePlaceholder;
 
 // Galerías: copia las fotos de cada servicio a src/assets/gallery/<slug>/ (jpg, png, webp) y aparecen solas.
 // Mientras la carpeta solo tenga los "ejemplo-N.svg", se muestran esos; al agregar fotos reales, los reemplazan.
@@ -129,12 +141,87 @@ Object.entries(galleryFiles)
     (galleryBySlug[slug] ||= []).push({ src, file });
   });
 
-// La portada (service.image) solo se muestra en la tarjeta; la galería no la repite.
+// La portada (service.cover) solo se muestra en la tarjeta; la galería no la repite.
 const getGallery = (service) => {
   const files = galleryBySlug[service.slug] || [];
   const real = files.filter((f) => !f.file.endsWith(".svg"));
   return (real.length ? real : files).map((f) => f.src);
 };
+
+// Proyectos (portafolio): cada carpeta de src/assets/proyectos/<Carpeta>/ es una tarjeta automática.
+// - Portada de la tarjeta: la foto que termina en "-01" (ej: novia-01.jpg). Si no hay, la primera foto.
+// - Al abrir la tarjeta (otra pestaña) se ven todas las fotos y videos, incluida la portada (jpg, jpeg, png, webp, mp4, webm).
+// - Para agregar un proyecto nuevo basta con crear otra carpeta con sus fotos.
+const projectFiles = import.meta.glob("./assets/proyectos/*/*.{jpg,jpeg,png,webp,mp4,webm}", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+// Nombres con tilde u otro formato (clave = nombre de carpeta en minúsculas, sin tildes y con guiones).
+// Si una carpeta no está aquí, se usa el nombre de la carpeta cambiando guiones por espacios.
+const PROJECT_TITLES = {
+  arlequin: "Arlequín",
+  "body-paint": "Body paint",
+  "efectos-especiales": "Efectos especiales",
+  "maquillaje-artistico": "Maquillaje artístico",
+  "maquillaje-audiovisual": "Maquillaje audiovisual",
+  "maquillaje-envejecimiento": "Maquillaje de envejecimiento",
+  novias: "Novias",
+  pestanas: "Pestañas",
+};
+
+// Orden de las tarjetas (nombres de carpeta como arriba). Las que no estén aquí van al final, en orden alfabético.
+// Ejemplo: ["novias", "pestanas", "maquillaje-artistico"]
+const PROJECT_ORDER = [];
+
+const slugify = (text) =>
+  text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+const projectsBySlug = {};
+Object.entries(projectFiles)
+  .sort(([a], [b]) => a.localeCompare(b, "es", { numeric: true }))
+  .forEach(([path, src]) => {
+    const [, , , folder, file] = path.split("/");
+    const slug = slugify(folder);
+    projectsBySlug[slug] ||= {
+      slug,
+      title: PROJECT_TITLES[slug] || folder.replace(/[-_]+/g, " "),
+      media: [],
+    };
+    projectsBySlug[slug].media.push({
+      src,
+      name: file.replace(/\.[^.]+$/, ""),
+      isVideo: /\.(mp4|webm)$/i.test(file),
+    });
+  });
+
+const projects = Object.values(projectsBySlug)
+  .map((project) => {
+    const images = project.media.filter((m) => !m.isVideo);
+    const cover = images.find((m) => /-0?1$/.test(m.name)) || images[0];
+    // La galería muestra todas las fotos y videos de la carpeta, con la portada primero.
+    const gallery = cover ? [cover, ...project.media.filter((m) => m !== cover)] : project.media;
+    const photos = gallery.filter((m) => !m.isVideo).length;
+    const videos = gallery.length - photos;
+    const summary = [photos > 0 && plural(photos, "foto", "fotos"), videos > 0 && plural(videos, "video", "videos")]
+      .filter(Boolean)
+      .join(" · ");
+    return { ...project, cover: cover?.src, gallery, summary };
+  })
+  .sort((a, b) => {
+    const ia = PROJECT_ORDER.indexOf(a.slug);
+    const ib = PROJECT_ORDER.indexOf(b.slug);
+    if (ia !== -1 || ib !== -1) return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    return a.title.localeCompare(b.title, "es");
+  });
 
 // Comentarios: solo reseñas reales y autorizadas. Si queda vacío, la sección no se muestra.
 // Formato: { quote: "…", name: "Nombre", service: "Servicio" }
@@ -223,7 +310,7 @@ function ServiceCard({ service }) {
         rel="noopener noreferrer"
         aria-label={`Ver todas las fotos de ${service.title}`}
       >
-        <img src={service.image} alt={service.alt} loading="lazy" />
+        <img src={getCover(service)} alt={service.alt} loading="lazy" />
         <span className="service-media-hint">Ver fotos</span>
       </a>
 
@@ -283,10 +370,8 @@ function FloatingWhatsApp() {
   );
 }
 
-function GalleryPage({ slug }) {
-  const service = services.find((s) => s.slug === slug);
-  const photos = service ? getGallery(service) : [];
-
+// Estructura común de las páginas de galería (servicios y proyectos). Cada item: { src, isVideo, alt }.
+function GalleryLayout({ title, description, chips, items, whatsappHref }) {
   return (
     <>
       <header className="site-nav gallery-nav">
@@ -302,23 +387,27 @@ function GalleryPage({ slug }) {
       <main className="gallery-main section-space">
         <div className="section-heading">
           <Eyebrow>GALERÍA</Eyebrow>
-          <h1 className="section-title">{service ? service.title : "Galería no encontrada"}</h1>
-          {service && <p className="section-intro">{service.description}</p>}
+          <h1 className="section-title">{title}</h1>
+          {description && <p className="section-intro">{description}</p>}
         </div>
 
         <nav className="gallery-chips" aria-label="Otras galerías">
-          {services.map((s) => (
-            <a key={s.slug} className={s.slug === slug ? "is-current" : ""} href={`#/galeria/${s.slug}`}>
-              {s.title}
+          {chips.map((chip) => (
+            <a key={chip.href} className={chip.current ? "is-current" : ""} href={chip.href}>
+              {chip.label}
             </a>
           ))}
         </nav>
 
-        {photos.length > 0 ? (
+        {items.length > 0 ? (
           <div className="projects-gallery gallery-grid">
-            {photos.map((src, index) => (
-              <figure className="project-item" key={src}>
-                <img src={src} alt={`${service.title}, foto ${index + 1}`} loading="lazy" />
+            {items.map((item) => (
+              <figure className="project-item" key={item.src}>
+                {item.isVideo ? (
+                  <video src={item.src} controls playsInline preload="metadata" aria-label={item.alt} />
+                ) : (
+                  <img src={item.src} alt={item.alt} loading="lazy" />
+                )}
               </figure>
             ))}
           </div>
@@ -333,7 +422,7 @@ function GalleryPage({ slug }) {
         )}
 
         <div className="gallery-actions">
-          <Button href={service ? whatsappForService(service.title) : WHATSAPP_URL} variant="dusty" external>
+          <Button href={whatsappHref} variant="dusty" external>
             Consultar por WhatsApp
           </Button>
           <Button href={window.location.pathname} variant="outline">
@@ -350,6 +439,41 @@ function GalleryPage({ slug }) {
       </footer>
       <FloatingWhatsApp />
     </>
+  );
+}
+
+// Galería de un servicio: #/galeria/<slug>
+function GalleryPage({ slug }) {
+  const service = services.find((s) => s.slug === slug);
+  const photos = service ? getGallery(service) : [];
+
+  return (
+    <GalleryLayout
+      title={service ? service.title : "Galería no encontrada"}
+      description={service?.description}
+      chips={services.map((s) => ({ label: s.title, href: `#/galeria/${s.slug}`, current: s.slug === slug }))}
+      items={photos.map((src, index) => ({ src, isVideo: false, alt: `${service.title}, foto ${index + 1}` }))}
+      whatsappHref={service ? whatsappForService(service.title) : WHATSAPP_URL}
+    />
+  );
+}
+
+// Galería de un proyecto del portafolio: #/proyecto/<slug>
+function ProjectPage({ slug }) {
+  const project = projects.find((p) => p.slug === slug);
+
+  return (
+    <GalleryLayout
+      title={project ? project.title : "Galería no encontrada"}
+      description={project?.summary}
+      chips={projects.map((p) => ({ label: p.title, href: `#/proyecto/${p.slug}`, current: p.slug === slug }))}
+      items={(project?.gallery || []).map((m, index) => ({
+        src: m.src,
+        isVideo: m.isVideo,
+        alt: `${project.title}, ${m.isVideo ? "video" : "foto"} ${index + 1}`,
+      }))}
+      whatsappHref={project ? whatsappForService(project.title) : WHATSAPP_URL}
+    />
   );
 }
 
@@ -384,7 +508,7 @@ function App() {
   useEffect(() => {
     const onHashChange = () => {
       setRoute(window.location.hash);
-      if (window.location.hash.startsWith("#/galeria/")) window.scrollTo(0, 0);
+      if (/^#\/(galeria|proyecto)\//.test(window.location.hash)) window.scrollTo(0, 0);
     };
     window.addEventListener("hashchange", onHashChange);
     return () => window.removeEventListener("hashchange", onHashChange);
@@ -424,6 +548,10 @@ function App() {
 
   if (route.startsWith("#/galeria/")) {
     return <GalleryPage slug={route.replace("#/galeria/", "")} />;
+  }
+
+  if (route.startsWith("#/proyecto/")) {
+    return <ProjectPage slug={route.replace("#/proyecto/", "")} />;
   }
 
   return (
@@ -640,56 +768,66 @@ function App() {
           </div>
         </section>
 
-        {/* PROYECTOS: mismas tarjetas que los servicios; la foto abre la galería en otra pestaña */}
+        {/* PROYECTOS: tarjetas automáticas desde src/assets/proyectos/<Carpeta>/ ; la foto abre la galería en otra pestaña */}
         <section className="projects portfolio section-space" id="proyectos">
           <div className="section-heading">
             <Eyebrow>PROYECTOS</Eyebrow>
             <h2 className="section-title">
               Trabajos que <span className="script-word">hablan.</span>
             </h2>
-            <p className="section-intro">Toca una tarjeta para ver las fotos de cada servicio.</p>
+            <p className="section-intro">Toca una tarjeta para ver las fotos y videos de cada trabajo.</p>
           </div>
 
-          <div className="services-carousel">
-            {portfolioCanPrev && (
-              <button className="services-arrow services-arrow-prev" type="button" aria-label="Ver trabajos anteriores" onClick={() => scrollPortfolio(-1)}>
-                <Arrow direction="left" />
-              </button>
-            )}
+          {projects.length > 0 ? (
+            <div className="services-carousel">
+              {portfolioCanPrev && (
+                <button className="services-arrow services-arrow-prev" type="button" aria-label="Ver trabajos anteriores" onClick={() => scrollPortfolio(-1)}>
+                  <Arrow direction="left" />
+                </button>
+              )}
 
-            <div className="services-track" ref={portfolioRef} onScroll={updatePortfolioArrows}>
-              {services.map((service) => (
-                <article className="service-card portfolio-card" key={service.slug}>
-                  <a
-                    className="service-media"
-                    href={`#/galeria/${service.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Ver todas las fotos de ${service.title}`}
-                  >
-                    <img src={service.image} alt={service.alt} loading="lazy" />
-                    <span className="service-media-hint">Ver fotos</span>
-                  </a>
-                  <h3>{service.title}</h3>
-                  <p className="service-line">{service.line}</p>
-                  <a
-                    className="service-link service-link-outline"
-                    href={`#/galeria/${service.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    VER FOTOS <Arrow />
-                  </a>
-                </article>
-              ))}
+              <div className="services-track" ref={portfolioRef} onScroll={updatePortfolioArrows}>
+                {projects.map((project) => (
+                  <article className="service-card portfolio-card" key={project.slug}>
+                    <a
+                      className="service-media"
+                      href={`#/proyecto/${project.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Ver todas las fotos de ${project.title}`}
+                    >
+                      <img src={project.cover || servicePlaceholder} alt={project.title} loading="lazy" />
+                      <span className="service-media-hint">Ver fotos</span>
+                    </a>
+                    <h3>{project.title}</h3>
+                    {project.summary && <p className="service-line">{project.summary}</p>}
+                    <a
+                      className="service-link service-link-outline"
+                      href={`#/proyecto/${project.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      VER FOTOS <Arrow />
+                    </a>
+                  </article>
+                ))}
+              </div>
+
+              {portfolioCanNext && (
+                <button className="services-arrow services-arrow-next" type="button" aria-label="Ver más trabajos" onClick={() => scrollPortfolio(1)}>
+                  <Arrow />
+                </button>
+              )}
             </div>
-
-            {portfolioCanNext && (
-              <button className="services-arrow services-arrow-next" type="button" aria-label="Ver más trabajos" onClick={() => scrollPortfolio(1)}>
-                <Arrow />
-              </button>
-            )}
-          </div>
+          ) : (
+            <div className="projects-empty">
+              <Sparkle size={22} />
+              <p>Estoy preparando esta galería. Mientras tanto, puedes ver mis trabajos más recientes en Instagram.</p>
+              <Button href={INSTAGRAM_URL} variant="outline" external>
+                Ver Instagram
+              </Button>
+            </div>
+          )}
 
           <div className="services-bottom">
             <p>Mira más trabajos recientes en mi Instagram.</p>

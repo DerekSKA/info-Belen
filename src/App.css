@@ -2287,3 +2287,11 @@ html {
     flex-basis: 74%;
   }
 }
+
+/* Videos dentro de las galerías */
+.project-item video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--text-primary);
+}

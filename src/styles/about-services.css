@@ -1,0 +1,263 @@
+/* ---------- Quién soy ---------- */
+.about {
+  padding-block: var(--section-y);
+  background: var(--surface);
+}
+
+.about__grid {
+  display: grid;
+  gap: var(--s-7);
+}
+
+.about__figure img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 18%;
+  background: var(--panel);
+}
+
+.about__figure figcaption {
+  margin-top: var(--s-3);
+  color: var(--text-soft);
+  font-size: var(--fs-xs);
+}
+
+.about__body {
+  display: grid;
+  gap: var(--s-6);
+  align-content: start;
+}
+
+.about__text {
+  max-width: var(--measure);
+}
+
+.about__text p + p,
+.about__more-inner p {
+  margin-top: var(--s-4);
+}
+
+.about__lead {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  line-height: 1.4;
+}
+
+/* Carta desplegable: el alto se anima con grid-template-rows */
+.about__more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-slow) var(--ease-out);
+}
+
+.about__more.is-open {
+  grid-template-rows: 1fr;
+}
+
+.about__more-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-6);
+}
+
+@media (min-width: 900px) {
+  .about__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--s-8);
+    align-items: start;
+  }
+
+  .about__figure {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+/* ---------- Servicios y precios ---------- */
+.services {
+  padding-block: var(--section-y);
+}
+
+.svc-group {
+  display: grid;
+  gap: var(--s-5);
+  padding-block: var(--s-7);
+  border-top: 1px solid var(--line-strong);
+}
+
+.svc-group__title {
+  font-size: var(--fs-lg);
+}
+
+.svc-group__list {
+  display: grid;
+}
+
+@media (min-width: 1000px) {
+  .svc-group {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 9fr);
+    gap: var(--s-7);
+  }
+}
+
+.svc {
+  display: grid;
+  gap: var(--s-5);
+  padding-block: var(--s-6);
+  border-top: 1px solid var(--line);
+}
+
+.svc:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.svc__media img,
+.svc__empty {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 50% 35%;
+  background: var(--panel);
+}
+
+.svc__media a {
+  display: block;
+}
+
+.svc__empty {
+  display: grid;
+  place-items: center;
+  background: var(--blush);
+}
+
+.svc__empty .seal {
+  width: 55%;
+}
+
+.svc__body {
+  display: grid;
+  gap: var(--s-3);
+  align-content: start;
+}
+
+.svc__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.svc__line {
+  color: var(--accent);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.svc__description {
+  max-width: 52ch;
+  color: var(--text-soft);
+}
+
+.svc__results {
+  display: grid;
+  gap: 0.2rem;
+  font-size: var(--fs-sm);
+}
+
+.svc__results li::before {
+  content: "– ";
+  color: var(--accent);
+}
+
+.svc__buy {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+}
+
+.svc__prices div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: 0.55rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.svc__prices dt {
+  color: var(--text-soft);
+  font-size: var(--fs-sm);
+}
+
+.svc__prices dd {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+}
+
+.svc__prices .svc__duration dd {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+}
+
+.svc__photos {
+  justify-self: start;
+}
+
+@media (min-width: 700px) {
+  .svc {
+    grid-template-columns: 10rem minmax(0, 1fr);
+  }
+
+  .svc__media img,
+  .svc__empty {
+    aspect-ratio: 3 / 4;
+  }
+
+  .svc__buy {
+    grid-column: 2;
+  }
+}
+
+@media (min-width: 1000px) {
+  .svc {
+    grid-template-columns: 9rem minmax(0, 1fr) 15.5rem;
+    gap: var(--s-6);
+  }
+
+  .svc__buy {
+    grid-column: auto;
+  }
+}
+
+.services__help {
+  display: grid;
+  gap: var(--s-5);
+  padding-top: var(--s-7);
+  border-top: 1px solid var(--line-strong);
+}
+
+.services__help p {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+}
+
+.services__help-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+@media (min-width: 900px) {
+  .services__help {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}

@@ -1,0 +1,90 @@
+/* ---------- Páginas de galería (#/galeria/… y #/proyecto/…) ---------- */
+.gallery {
+  padding-block: var(--s-8) var(--section-y);
+}
+
+.gallery__head {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.gallery__intro {
+  max-width: var(--measure);
+  color: var(--text-soft);
+}
+
+/* Navegación entre galerías: texto con subrayado en la actual */
+.gallery__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s-5);
+  margin-block: var(--s-6) var(--s-7);
+  border-bottom: 1px solid var(--line);
+}
+
+.gallery__tabs a {
+  padding-block: 0.75rem;
+  border-bottom: 2px solid transparent;
+  color: var(--text-soft);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  transition:
+    color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease;
+}
+
+.gallery__tabs a[aria-current="page"] {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+@media (hover: hover) {
+  .gallery__tabs a:hover {
+    color: var(--text);
+  }
+}
+
+/* Muro en columnas: cada foto conserva su proporción, sin recortes */
+.gallery__wall {
+  columns: 1;
+  column-gap: var(--s-4);
+}
+
+.gallery__wall li {
+  margin-bottom: var(--s-4);
+  break-inside: avoid;
+}
+
+.gallery__wall img,
+.gallery__wall video {
+  width: 100%;
+  background: var(--panel);
+}
+
+@media (min-width: 560px) {
+  .gallery__wall {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1000px) {
+  .gallery__wall {
+    columns: 3;
+  }
+}
+
+.gallery__empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-4);
+  max-width: 46ch;
+  padding-block: var(--s-6);
+  color: var(--text-soft);
+}
+
+.gallery__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-7);
+}

@@ -1,0 +1,175 @@
+/* Piezas compartidas: titulares, encabezados de sección, botones, enlaces, sello, botón flotante */
+
+.display {
+  font-size: var(--fs-2xl);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+}
+
+/* Encabezado de sección: titular a la izquierda, texto de apoyo a la derecha */
+.section-head {
+  display: grid;
+  gap: var(--s-5);
+  margin-bottom: var(--s-8);
+}
+
+.section-head__intro {
+  max-width: 46ch;
+  color: var(--text-soft);
+}
+
+@media (min-width: 900px) {
+  .section-head {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: end;
+    gap: var(--s-8);
+  }
+}
+
+/* Botones: rectangulares, con feedback inmediato al pulsar */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  transition:
+    background-color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    color var(--dur-fast) ease,
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--solid {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn--line {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.btn--light {
+  background: var(--vainilla);
+  color: var(--ink);
+}
+
+.btn--sm {
+  min-height: 2.75rem;
+  padding: 0.55rem 1.1rem;
+}
+
+@media (hover: hover) {
+  .btn--solid:hover {
+    background: var(--accent-hover);
+  }
+
+  .btn--line:hover {
+    border-color: var(--text);
+  }
+
+  .btn--light:hover {
+    background: var(--beige);
+  }
+}
+
+/* Enlaces de texto */
+.link,
+.link-button {
+  color: var(--accent);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-thickness var(--dur-fast) ease;
+}
+
+.link-button {
+  min-height: 2.75rem;
+}
+
+@media (hover: hover) {
+  .link:hover,
+  .link-button:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* Sello circular con el logo (luna del emblema) */
+.seal {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--r-round);
+  background: var(--blush);
+}
+
+.seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botón flotante de WhatsApp: la única pieza con sombra y forma redonda */
+.wa-float {
+  position: fixed;
+  right: max(var(--s-4), env(safe-area-inset-right));
+  bottom: max(var(--s-4), env(safe-area-inset-bottom));
+  z-index: var(--z-float);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-width: 3.5rem;
+  height: 3.5rem;
+  padding-inline: 1rem;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--rosewood);
+  color: var(--vainilla);
+  box-shadow: var(--shadow-float);
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out),
+    background-color var(--dur-fast) ease;
+}
+
+.wa-float:active {
+  transform: scale(0.95);
+}
+
+.wa-float.is-hidden {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+.wa-float__label {
+  display: none;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+@media (min-width: 900px) {
+  .wa-float__label {
+    display: inline;
+  }
+}
+
+@media (hover: hover) {
+  .wa-float:hover {
+    background: var(--rosewood-deep);
+  }
+}

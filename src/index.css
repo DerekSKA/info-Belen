@@ -1,164 +1,117 @@
-/* =====================================================================
-   BELISSE GLAM · SISTEMA DE DISEÑO
-   Tokens, reinicio y utilidades globales. Todo lo demás vive en
-   src/App.css (que importa src/styles/*.css).
-   ===================================================================== */
+/* ========================================
+   SISTEMA VISUAL · Belisse Glam
+   "Camerino cálido": vainilla, arena y cacao.
+   Todo lo demás se construye con estos tokens.
+======================================== */
 
 :root {
-  /* ---- Color: paleta limitada ---- */
-  --vainilla: #f5ebe1; /* fondo principal */
-  --alabastro: #edeee9; /* superficie fría de contraste */
-  --beige: #e3d5ca; /* paneles y fondos cálidos */
-  --blush: #feeaeb; /* rosa del logo: solo para el sello */
-  --ink: #2c1d11; /* marrón profundo: texto y secciones oscuras */
-  --rosewood: #7a3340; /* acento: botones, enlaces, detalles */
-  --rosewood-deep: #5f2732; /* acento en hover */
-  --rose-soft: #e2a4ac; /* acento sobre fondo oscuro */
+  /* --- Paleta base --- */
+  --vanilla: #F5EBE1; /* fondo principal */
+  --vanilla-deep: #EDE0D3; /* bandas alternas, una nota más oscura */
+  --cream: #F0EBD5; /* apoyo cálido, uso puntual */
+  --sand: #E3D5CA; /* beige rosado: paneles y superficies */
+  --cocoa: #2C1D11; /* texto, botones y bandas oscuras */
+  --cocoa-soft: #5A4332; /* texto secundario (7.8:1 sobre vainilla) */
+  --clay: #7E4A3E; /* único acento (6:1 sobre vainilla, 5:1 sobre arena) */
+  --paper: #FBF6EF; /* superficie clara y texto sobre cacao */
+  --line: #D3C2B5; /* filetes y bordes */
+  --line-strong: #B49C8B;
 
-  /* Roles semánticos (las secciones oscuras los redefinen) */
-  --bg: var(--vainilla);
-  --surface: var(--alabastro);
-  --panel: var(--beige);
-  --text: var(--ink);
-  --text-soft: #5c4838;
-  --accent: var(--rosewood);
-  --accent-hover: var(--rosewood-deep);
-  --on-accent: var(--vainilla);
-  --line: rgb(44 29 17 / 0.18);
-  --line-strong: rgb(44 29 17 / 0.42);
-  --focus: var(--rosewood);
+  /* --- Nombres anteriores, redirigidos a la paleta nueva ---
+     Las secciones aún no rediseñadas (servicios, proyectos, contacto)
+     los siguen usando; así heredan la paleta sin tocar su CSS. */
+  --bg-blush: var(--vanilla);
+  --bg-pink: var(--vanilla-deep);
+  --surface-white: var(--paper);
+  --accent-pink: #D8B9AB;
+  --accent-gold: var(--clay);
+  --gold-soft: #C9A98A;
+  --celeste: var(--vanilla);
+  --celeste-deep: var(--line);
+  --text-primary: var(--cocoa);
+  --border-soft: var(--line);
 
-  /* ---- Tipografía ---- */
-  --font-display: "Bodoni Moda", "Bodoni 72", Didot, Georgia, serif;
-  --font-body: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* --- Tipografía --- */
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
 
-  --fs-xs: 0.8125rem;
-  --fs-sm: 0.9375rem;
-  --fs-base: 1.0625rem;
-  --fs-md: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --fs-lg: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
-  --fs-xl: clamp(2.125rem, 1.5rem + 2.6vw, 3.25rem);
-  --fs-2xl: clamp(2.5rem, 1.6rem + 4vw, 4.75rem);
-  --fs-hero: clamp(3rem, 1.9rem + 5vw, 5.75rem);
+  /* escala fluida (display máx. 6rem) */
+  --step-display: clamp(3.25rem, 1.6rem + 6.6vw, 6rem);
+  --step-title: clamp(2.5rem, 1.5rem + 3.6vw, 4.5rem);
+  --step-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --step-body: 1rem;
+  --step-small: 0.875rem;
+  --step-label: 0.75rem;
 
-  /* ---- Espaciado (escala de 4 px) ---- */
-  --s-1: 0.25rem;
-  --s-2: 0.5rem;
-  --s-3: 0.75rem;
-  --s-4: 1rem;
-  --s-5: 1.5rem;
-  --s-6: 2rem;
-  --s-7: 3rem;
-  --s-8: 4.5rem;
-  --s-9: 7rem;
-  --section-y: clamp(4.5rem, 3rem + 7vw, 8rem);
+  /* --- Espaciado (base 4px) --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
 
-  /* ---- Ancho de contenido ---- */
-  --gutter: clamp(1.25rem, 5vw, 4rem);
-  --content-max: 1200px;
-  --measure: 62ch;
+  --page-gutter: clamp(20px, 5.5vw, 88px);
+  --content-width: 1200px;
+  --nav-height: 72px;
 
-  /* ---- Bordes y sombras (las sombras solo donde se justifican) ---- */
-  --r-sm: 2px;
-  --r-round: 50%;
-  --shadow-float: 0 6px 20px rgb(44 29 17 / 0.22);
+  /* --- Forma y profundidad --- */
+  --radius-sm: 3px;
+  --radius-md: 14px;
+  --shadow-soft: 0 10px 30px rgba(44, 29, 17, 0.08);
+  --shadow-hover: 0 16px 40px rgba(44, 29, 17, 0.14);
 
-  /* ---- Movimiento ---- */
+  /* --- Movimiento (curvas fuertes, siempre ease-out al entrar) --- */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --dur-fast: 140ms;
-  --dur: 240ms;
-  --dur-slow: 500ms;
+  --dur-press: 140ms;
+  --dur-fast: 180ms;
+  --dur-base: 240ms;
 
-  /* ---- Capas ---- */
-  --z-float: 40;
-  --z-nav: 50;
+  font-family: var(--font-sans);
+  color: var(--cocoa);
+  background: var(--vanilla);
+  color-scheme: light;
+  accent-color: var(--clay);
+  scrollbar-color: var(--line-strong) var(--vanilla);
 
-  font-family: var(--font-body);
-  color: var(--text);
-  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ---- Reinicio ---- */
-*,
-*::before,
-*::after {
+/* Reinicio de estilos */
+
+* {
   box-sizing: border-box;
 }
 
 html {
   min-width: 320px;
   scroll-behavior: smooth;
-  scroll-padding-top: 4.5rem;
-  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-height) + 12px);
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: var(--fs-base);
+  background: var(--vanilla);
+  color: var(--cocoa);
+  font-family: var(--font-sans);
+  font-size: var(--step-body);
   font-weight: 400;
-  line-height: 1.65;
-  overflow-x: hidden;
+  line-height: 1.7;
 }
 
-h1,
-h2,
-h3,
-h4,
-p,
-figure,
-blockquote,
-dl,
-dd {
-  margin: 0;
-}
-
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-h1,
-h2,
-h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-optical-sizing: auto;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  text-wrap: balance;
-}
-
-p {
-  text-wrap: pretty;
-}
-
+body,
+button,
 a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img,
-svg,
-video {
-  display: block;
-  max-width: 100%;
-}
-
-img,
-video {
-  height: auto;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button,
@@ -170,75 +123,87 @@ select {
 
 button {
   color: inherit;
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
 }
 
-a,
-button {
-  -webkit-tap-highlight-color: transparent;
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+a {
   touch-action: manipulation;
 }
 
+/* Foco visible y coherente con la paleta */
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--clay);
   outline-offset: 3px;
 }
 
+/* Superficies del navegador tematizadas */
 ::selection {
-  color: var(--ink);
-  background: var(--rose-soft);
+  color: var(--cocoa);
+  background: var(--sand);
 }
 
-/* ---- Utilidades ---- */
-.container {
-  width: min(100% - 2 * var(--gutter), var(--content-max));
-  margin-inline: auto;
+input,
+textarea {
+  caret-color: var(--clay);
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
 }
 
-.skip-link {
-  position: fixed;
-  top: var(--s-3);
-  left: var(--s-3);
-  z-index: calc(var(--z-nav) + 1);
-  padding: var(--s-3) var(--s-4);
-  background: var(--ink);
-  color: var(--vainilla);
-  font-size: var(--fs-sm);
-  transform: translateY(-200%);
+::-webkit-scrollbar-track {
+  background: var(--vanilla);
 }
 
-.skip-link:focus-visible {
-  transform: none;
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--vanilla);
+  border-radius: 99px;
+  background: var(--line-strong);
 }
 
-/* ---- Movimiento reducido ---- */
+h1,
+h2,
+h3,
+h4,
+p,
+blockquote {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: inherit;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {
+    scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
